@@ -1,0 +1,97 @@
+@startuml
+
+hide circle
+
+top to bottom direction
+
+!define ENTITY(entityName) class entityName << Entity >>
+!define AGGREGATE(aggregateName) class aggregateName << Aggregate >>
+!define AGGREGATE_ROOT(aggregateRootName) class aggregateRootName << Aggregate Root >>
+!define VALUE_OBJECT(valueObjectName) class valueObjectName << Value Object >>
+!pragma useVerticalIf on
+
+skinparam dpi 350
+skinparam packageStyle rectangle
+
+skinparam rectangle {
+    BackgroundColor #f7f4eb
+    BorderColor Black
+}
+
+Package "Member Management" <<Rectangle>> #FFCDD2 {
+    AGGREGATE_ROOT(Member) #lightblue {
+        name: String
+        phoneNumber: String
+    }
+
+    VALUE_OBJECT(Address) #Bisque {
+        streetName: String
+        cityName: String
+        zipCode: String
+        countryName: String
+    }
+
+    VALUE_OBJECT(LibraryCard) #Bisque {
+        cardId: UUID
+    }
+
+    Member --> LibraryCard
+    Member --> Address
+}
+
+Package "Book Lending" <<Rectangle>> #F5D76E {
+    ENTITY(Loan) #lightblue {
+        loanDate: DateTime
+        dueDate: DateTime
+        status: String
+    }
+
+    ENTITY(Fine) #lightblue {
+        amount: Decimal
+        reason: String
+    }
+
+    Loan --> Member
+    Loan --> Book
+    Loan o--> Fine
+}
+
+Package "Inventory Tracking" <<Rectangle>> #81C784 {
+
+    AGGREGATE_ROOT(Book) #lightblue {
+        title: String
+        author: String
+        publisher: String
+    }
+
+    VALUE_OBJECT(ISBN) #Bisque {
+        isbnNumber: String
+    }
+
+    ENTITY(Catalog) #lightblue {
+        totalCopies: Integer
+        availableCopies: Integer
+    }
+
+    Book --> ISBN
+    Catalog o-- "0..*" Book
+}
+
+Package "Reservation Management" <<Rectangle>> #64B5F6 {
+
+    ENTITY(Reservation) #lightblue {
+        reservationDate: DateTime
+        status: String
+    }
+
+    VALUE_OBJECT(Notification) #Bisque {
+        message: String
+        timestamp: DateTime
+    }
+
+    Reservation --> Member
+    Reservation --> Book
+    Reservation o--> Notification
+}
+
+@enduml
