@@ -30,7 +30,6 @@ public class BookServiceImpl implements BookService {
         this.bookRequestMapper = bookRequestMapper;
     }
 
-
     public List<BookResponseModel> getAllBooks() {
         return this.bookResponseMapper.entityToResponseModelList(this.bookRepository.findAll());
     }

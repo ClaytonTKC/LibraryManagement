@@ -20,6 +20,7 @@ public class Book {
     private BookIdentifier bookIdentifier;
 
     private String authorid;
+    private String inventoryid;
 
     private String title;
     private String genre;

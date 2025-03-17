@@ -13,16 +13,17 @@ VALUES
 
 INSERT INTO authors (authorid, first_name, last_name, pseudonym)
 VALUES
-    ('AUTH001', 'Isaac', 'Asimov', NULL),
-    ('AUTH002', 'J.K.', 'Rowling', 'Robert Galbraith'),
-    ('AUTH003', 'George', 'Orwell', NULL),
-    ('AUTH004', 'Agatha', 'Christie', NULL),
-    ('AUTH005', 'Mark', 'Twain', 'Samuel Clemens'),
-    ('AUTH006', 'Stephen', 'King', 'Richard Bachman'),
-    ('AUTH007', 'Jane', 'Austen', NULL),
-    ('AUTH008', 'Ernest', 'Hemingway', NULL),
-    ('AUTH009', 'Mary', 'Shelley', NULL),
-    ('AUTH010', 'H.G.', 'Wells', NULL);
+    ('123e4567-e89b-12d3-a456-556642440000', 'Isaac', 'Asimov', NULL),
+    ('223e4567-e89b-12d3-a456-556642440001', 'J.K.', 'Rowling', 'Robert Galbraith'),
+    ('323e4567-e89b-12d3-a456-556642440002', 'George', 'Orwell', NULL),
+    ('423e4567-e89b-12d3-a456-556642440003', 'Agatha', 'Christie', NULL),
+    ('523e4567-e89b-12d3-a456-556642440004', 'Mark', 'Twain', 'Samuel Clemens'),
+    ('623e4567-e89b-12d3-a456-556642440005', 'Stephen', 'King', 'Richard Bachman'),
+    ('723e4567-e89b-12d3-a456-556642440006', 'Jane', 'Austen', NULL),
+    ('823e4567-e89b-12d3-a456-556642440007', 'Ernest', 'Hemingway', NULL),
+    ('923e4567-e89b-12d3-a456-556642440008', 'Mary', 'Shelley', NULL),
+    ('a23e4567-e89b-12d3-a456-556642440009', 'H.G.', 'Wells', NULL);
+
 
 INSERT INTO inventories (inventoryid, bookid, quantity, status)
 VALUES
@@ -37,18 +38,18 @@ VALUES
     ('l9m2357l-2f4e-1f69-c229-j99df6m4n809', 'k0m1i2j3-4f6e-7d9b-8c7d-i990j1k3l414', 0, 'DAMAGED'),
     ('m0n3468m-3f5e-2f70-d339-k00df7n5o910', 'l1n2j3k4-5f7e-8d0b-9c8d-j101k2l4n515', 12, 'AVAILABLE');
 
-INSERT INTO books (bookid, authorid, title, genre, publisher, released, availability)
+INSERT INTO books (bookid, authorid, inventoryid, title, genre, publisher, released, availability)
 VALUES
-    ('c1e2b3d4-5f6e-7a8b-9c0d-a112b2c3d4e5', 'auth-001', 'The Lost World', 'Adventure', 'Penguin Books', CURRENT_TIMESTAMP, 'AVAILABLE'),
-    ('d3f4b5c6-7f8e-9d2b-0c1d-b223b4c5d6f7', 'auth-002', 'Damaged Chronicles', 'Mystery', 'HarperCollins', CURRENT_TIMESTAMP, 'DAMAGED'),
-    ('e4g5c6d7-8f9e-0d3b-1c2d-c334d5e6f7g8', 'auth-003', 'Borrowed Time', 'Thriller', 'Random House', CURRENT_TIMESTAMP, 'BORROWED'),
-    ('f5h6d7e8-9f1e-2d4b-3c2d-d445e6f7g809', 'auth-004', 'Adventure Calls', 'Adventure', 'Scholastic', CURRENT_TIMESTAMP, 'AVAILABLE'),
-    ('g6i7e8f9-0f2e-3d5b-4c3d-e556f7g8i9j0', 'auth-005', 'The Damaged Tome', 'Fantasy', 'Simon & Schuster', CURRENT_TIMESTAMP, 'DAMAGED'),
-    ('h7j8f9g0-1f3e-4d6b-5c4d-f667g8i0j1k1', 'auth-006', 'Inventory Mystery', 'Drama', 'Macmillan', CURRENT_TIMESTAMP, 'AVAILABLE'),
-    ('i8k9g0h1-2f4e-5d7b-6c5d-g778h9j1k212', 'auth-007', 'Borrowed Hearts', 'Suspense', 'Bloomsbury', CURRENT_TIMESTAMP, 'BORROWED'),
-    ('j9l0h1i2-3f5e-6d8b-7c6d-h889i0j2k313', 'auth-008', 'Shelf Life', 'Non-fiction', 'Oxford Press', CURRENT_TIMESTAMP, 'AVAILABLE'),
-    ('k0m1i2j3-4f6e-7d9b-8c7d-i990j1k3l414', 'auth-009', 'Broken Stories', 'Horror', 'Tor Books', CURRENT_TIMESTAMP, 'DAMAGED'),
-    ('l1n2j3k4-5f7e-8d0b-9c8d-j101k2l4n515', 'auth-010', 'Stocked Future', 'Sci-Fi', 'Orbit', CURRENT_TIMESTAMP, 'AVAILABLE');
+    ('c1e2b3d4-5f6e-7a8b-9c0d-a112b2c3d4e5', '123e4567-e89b-12d3-a456-556642440000', 'd0e5678d-20d1-4d22-9512-b99df9e6f101', 'The Lost World', 'Adventure', 'Penguin Books', CURRENT_TIMESTAMP, 'AVAILABLE'),
+    ('d3f4b5c6-7f8e-9d2b-0c1d-b223b4c5d6f7', '223e4567-e89b-12d3-a456-556642440001', 'e2f5689e-5f7d-4c92-9522-c22df9e7g102', 'Damaged Chronicles', 'Mystery', 'HarperCollins', CURRENT_TIMESTAMP, 'DAMAGED'),
+    ('e4g5c6d7-8f9e-0d3b-1c2d-c334d5e6f7g8', '323e4567-e89b-12d3-a456-556642440002', 'f3g6791f-6f8d-5d03-9633-d33df0g8h203', 'Borrowed Time', 'Thriller', 'Random House', CURRENT_TIMESTAMP, 'BORROWED'),
+    ('f5h6d7e8-9f1e-2d4b-3c2d-d445e6f7g809', '423e4567-e89b-12d3-a456-556642440003', 'g4h7802g-7f9e-6e14-9744-e44df1h9i304', 'Adventure Calls', 'Adventure', 'Scholastic', CURRENT_TIMESTAMP, 'AVAILABLE'),
+    ('g6i7e8f9-0f2e-3d5b-4c3d-e556f7g8i9j0', '523e4567-e89b-12d3-a456-556642440004', 'h5i8913h-8f0e-7f25-9855-f55df2i0j405', 'The Damaged Tome', 'Fantasy', 'Simon & Schuster', CURRENT_TIMESTAMP, 'DAMAGED'),
+    ('h7j8f9g0-1f3e-4d6b-5c4d-f667g8i0j1k1', '623e4567-e89b-12d3-a456-556642440005', 'i6j9024i-9f1e-8f36-9966-g66df3j1k506', 'Inventory Mystery', 'Drama', 'Macmillan', CURRENT_TIMESTAMP, 'AVAILABLE'),
+    ('i8k9g0h1-2f4e-5d7b-6c5d-g778h9j1k212', '723e4567-e89b-12d3-a456-556642440006', 'j7k0135j-0f2e-9f47-a007-h77df4k2l607', 'Borrowed Hearts', 'Suspense', 'Bloomsbury', CURRENT_TIMESTAMP, 'BORROWED'),
+    ('j9l0h1i2-3f5e-6d8b-7c6d-h889i0j2k313', '823e4567-e89b-12d3-a456-556642440007', 'k8l1246k-1f3e-0f58-b118-i88df5l3m708', 'Shelf Life', 'Non-fiction', 'Oxford Press', CURRENT_TIMESTAMP, 'AVAILABLE'),
+    ('k0m1i2j3-4f6e-7d9b-8c7d-i990j1k3l414', '923e4567-e89b-12d3-a456-556642440008', 'l9m2357l-2f4e-1f69-c229-j99df6m4n809', 'Broken Stories', 'Horror', 'Tor Books', CURRENT_TIMESTAMP, 'DAMAGED'),
+    ('l1n2j3k4-5f7e-8d0b-9c8d-j101k2l4n515', 'a23e4567-e89b-12d3-a456-556642440009', 'm0n3468m-3f5e-2f70-d339-k00df7n5o910', 'Stocked Future', 'Sci-Fi', 'Orbit', CURRENT_TIMESTAMP, 'AVAILABLE');
 
 INSERT INTO transactions (transactionid, memberid, bookid, transaction_date, status, method, currency, amount)
 VALUES

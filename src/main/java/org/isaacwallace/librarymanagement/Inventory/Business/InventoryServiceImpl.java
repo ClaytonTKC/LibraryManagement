@@ -59,6 +59,10 @@ public class InventoryServiceImpl implements InventoryService {
 
         this.inventoryRequestMapper.updateEntityFromRequest(inventoryRequestModel, inventory);
 
+        if (inventory.getId() < 0) { // Invariant HA
+            throw new InvalidInputException("Quantity must always be above 0. Invalid quantity: " + inventory.getQuantity());
+        }
+
         Inventory updatedInventory = this.inventoryRepository.save(inventory);
 
         logger.info("Updated member with inventoryid: " + inventoryid);

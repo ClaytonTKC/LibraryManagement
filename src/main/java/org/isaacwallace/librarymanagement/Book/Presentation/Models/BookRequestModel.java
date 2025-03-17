@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class BookRequestModel extends RepresentationModel<BookRequestModel> {
-    String authorIdentifier;
+    String authorid;
+    String inventoryid;
 
     String title;
     String genre;

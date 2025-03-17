@@ -13,5 +13,4 @@ public class AuthorRequestModel extends RepresentationModel<AuthorRequestModel> 
     String firstName;
     String lastName;
     String pseudonym;
-
 }

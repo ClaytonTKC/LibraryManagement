@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class BookResponseModel extends RepresentationModel<BookResponseModel> {
     private String bookid;
     private String authorid;
+    private String inventoryid;
 
     private String title;
     private String genre;

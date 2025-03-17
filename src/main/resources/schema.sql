@@ -6,8 +6,8 @@ DROP TABLE IF EXISTS authors;
 
 
 CREATE TABLE IF NOT EXISTS members (
-                                       id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                                       memberid VARCHAR(50) UNIQUE,
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    memberid VARCHAR(50) UNIQUE,
 
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
@@ -20,31 +20,32 @@ CREATE TABLE IF NOT EXISTS members (
 
     phone_number VARCHAR(50),
     phone_type VARCHAR(50)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS inventories (
-                                           id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                                           inventoryid VARCHAR(50) UNIQUE NOT NULL,
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    inventoryid VARCHAR(50) UNIQUE NOT NULL,
     bookid VARCHAR(50) NOT NULL,
 
     quantity INTEGER,
     status VARCHAR(50)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS books (
-                                     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                                     bookid VARCHAR(50) UNIQUE NOT NULL,
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    bookid VARCHAR(50) UNIQUE NOT NULL,
     authorid VARCHAR(50) NOT NULL,
+    inventoryid VARCHAR(50) NOT NULL,
     title VARCHAR(255) NOT NULL,
     genre VARCHAR(100),
     publisher VARCHAR(100),
     released TIMESTAMP,
     availability VARCHAR(50)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS transactions (
-                                            id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                                            transactionid VARCHAR(50) UNIQUE NOT NULL,
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    transactionid VARCHAR(50) UNIQUE NOT NULL,
 
     memberid VARCHAR(50) NOT NULL,
     bookid VARCHAR(50) NOT NULL,
@@ -56,12 +57,12 @@ CREATE TABLE IF NOT EXISTS transactions (
     method VARCHAR(50),
     currency VARCHAR(50),
     amount DOUBLE
-    );
+);
 
 CREATE TABLE IF NOT EXISTS authors(
-                                      id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                                      authorid VARCHAR(50) UNIQUE,
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    authorid VARCHAR(50) UNIQUE,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     pseudonym VARCHAR(50)
-    )
+)

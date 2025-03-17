@@ -11,5 +11,4 @@ public class AuthorResponseModel extends RepresentationModel<AuthorResponseModel
     private String firstName;
     private String lastName;
     private String pseudonym;
-
 }
