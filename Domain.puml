@@ -1,12 +1,11 @@
 @startuml
-
 hide circle
 
 top to bottom direction
 
-!define ENTITY(entityName) class entityName << Entity >>
-!define AGGREGATE(aggregateName) class aggregateName << Aggregate >>
-!define AGGREGATE_ROOT(aggregateRootName) class aggregateRootName << Aggregate Root >>
+!define ENTITY(entityName) entity entityName << Entity >>
+!define AGGREGATE(aggregateName) entity aggregateName << Aggregate >>
+!define AGGREGATE_ROOT(aggregateRootName) entity aggregateRootName << Aggregate Root >>
 !define VALUE_OBJECT(valueObjectName) class valueObjectName << Value Object >>
 !define ENUM(enumName) class enumName << Enum >>
 !pragma useVerticalIf on
@@ -18,95 +17,162 @@ skinparam rectangle {
     BackgroundColor #f7f4eb
     BorderColor Black
 }
+rectangle "Library Management" as BoundedContextSocialMedia #line.dashed {
+    package "Membership Sub-Domain" #FFCDD2 {
+        ENTITY(Member) #lightblue {
+            memberId: UUID
+            firstname: String
+            lastname: String
+            email: String
+        }
 
-Package "Member Management" <<Rectangle>> #FFCDD2 {
-    AGGREGATE(Member) #lightblue {
-        firstname: String
-        lastname: String
-        email: String
+        VALUE_OBJECT(Address) #Bisque {
+            street: String
+            city: String
+            postal: String
+            province: String
+        }
+
+        VALUE_OBJECT(Phone) #Bisque {
+            number: String
+            type: PhoneType
+        }
+
+        ENUM(PhoneType) #SandyBrown {
+            MOBILE,
+            HOME,
+            WORK
+        }
+
+        VALUE_OBJECT(MemberIdentifier) #Bisque {
+            memberId: UUID
+        }
+
+        Member "1" o--> "1" MemberIdentifier
+        Member --> Address
+        Member --> Phone
+
+        Phone --> PhoneType
     }
 
-    VALUE_OBJECT(Address) #Bisque {
-        street: String
-        city: String
-        postal: String
-        province: String
+    package "Author Sub-Domain" #SeaGreen {
+        ENTITY(Author) #lightblue {
+            authorId: UUID
+            first_name: String
+            last_name: String
+            pseudonym: String
+        }
+
+        VALUE_OBJECT(AuthorIdentifier) #Bisque {
+            authorId: UUID
+        }
+
+        Author "1" o--> "1" AuthorIdentifier
     }
 
-    VALUE_OBJECT(Phone) #Bisque {
-        number: String
-        type: PhoneType
+    package "Transaction Sub-Domain" #Wheat {
+        ENTITY(Transaction) #lightblue {
+            transactionId: UUID
+            transactionDate: DateTime
+            memberId: UUID
+            bookId: UUID
+            status: TransactionStatus
+        }
+
+        VALUE_OBJECT(TransactionDate) #Bisque {
+            date: DateTime
+        }
+
+        VALUE_OBJECT(TransactionIdentifier) #Bisque {
+            transactionId: UUID
+        }
+
+        VALUE_OBJECT(Payment) #Bisque {
+            method: PaymentMethod
+            currency: PaymentCurrency
+            amount: Double
+        }
+
+        ENUM(PaymentCurrency) #SandyBrown {
+            CAD,
+            USD,
+            EUR
+        }
+
+        ENUM(PaymentMethod) #SandyBrown {
+            DEBIT,
+            CREDIT,
+            CASH
+        }
+
+        ENUM(TransactionStatus) #SandyBrown {
+            PENDING,
+            COMPLETED,
+            CANCELED
+        }
+
+        Transaction "1" o--> "1" TransactionIdentifier
+        Transaction --> TransactionDate
+        Transaction --> TransactionStatus
+        Transaction --> Payment
+
+        Payment --> PaymentMethod
+        Payment --> PaymentCurrency
     }
 
-    ENUM(PhoneType) #SandyBrown {
-        MOBILE,
-        HOME,
-        WORK
+    package "Inventory Sub-Domain" #LightSkyBlue {
+        AGGREGATE_ROOT(Inventory) #lightblue {
+            inventoryId: UUID
+            bookId: UUID
+            quantity: Integer
+            status: InventoryStatus
+        }
+
+        VALUE_OBJECT(InventoryIdentifier) #Bisque {
+            inventoryId: UUID
+        }
+
+        VALUE_OBJECT(BookStock) #Bisque {
+            quantity: Integer
+        }
+
+        ENUM(InventoryStatus) #SandyBrown {
+            AVAILABLE,
+            DAMAGED,
+            LOST
+        }
+
+        ENTITY(Book) #lightblue {
+            bookId: UUID
+            authoId: UUID
+            title: String
+            genre: String
+            released: DateTime
+            availability: BookStatus
+        }
+
+        VALUE_OBJECT(BookIdentifier) #Bisque {
+            bookId: UUID
+        }
+
+        ENUM(BookStatus) #SandyBrown {
+            AVAILABLE,
+            BORROWED,
+            DAMAGED
+        }
+
+        Book "1" o--> "1" BookIdentifier
+        Book --> BookStatus
+
+        Inventory "1" o--> "1" InventoryIdentifier
+        Inventory --> InventoryStatus
+        Inventory "1" o--> "1..*" Book
+        Inventory --> BookStock
     }
 
-    VALUE_OBJECT(LibraryCard) #Bisque {
-        memberId: UUID
-    }
-
-    Member --> LibraryCard
-    Member --> Address
-    Member --> Phone
-    Phone --> PhoneType
-}
-
-Package "Book Lending" <<Rectangle>> #F5D76E {
-    ENTITY(Loan) #lightblue {
-        loanDate: DateTime
-        dueDate: DateTime
-        status: String
-    }
-
-    ENTITY(Fine) #lightblue {
-        amount: Decimal
-        reason: String
-    }
-
-    Loan --> Member
-    Loan --> Book
-    Loan o--> Fine
-}
-
-Package "Inventory Tracking" <<Rectangle>> #81C784 {
-
-    AGGREGATE_ROOT(Book) #lightblue {
-        title: String
-        author: String
-        publisher: String
-    }
-
-    VALUE_OBJECT(ISBN) #Bisque {
-        isbnNumber: String
-    }
-
-    ENTITY(Catalog) #lightblue {
-        totalCopies: Integer
-        availableCopies: Integer
-    }
-
-    Book --> ISBN
-    Catalog o-- "0..*" Book
-}
-
-Package "Reservation Management" <<Rectangle>> #64B5F6 {
-
-    ENTITY(Reservation) #lightblue {
-        reservationDate: DateTime
-        status: String
-    }
-
-    VALUE_OBJECT(Notification) #Bisque {
-        message: String
-        timestamp: DateTime
-    }
-
-    Reservation --> Member
-    Reservation --> Book
-    Reservation o--> Notification
+    Book "1" o--> "1" AuthorIdentifier
+    Transaction "1" o--> "1" BookIdentifier
+    Transaction "1" o--> "1" MemberIdentifier
 }
 
 @enduml

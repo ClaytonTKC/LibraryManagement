@@ -1,0 +1,138 @@
+@startuml
+hide circle
+
+top to bottom direction
+
+!define ENTITY(entityName) entity entityName << Entity >>
+!define AGGREGATE(aggregateName) entity aggregateName << Aggregate >>
+!define AGGREGATE_ROOT(aggregateRootName) entity aggregateRootName << Aggregate Root >>
+!define VALUE_OBJECT(valueObjectName) class valueObjectName << Value Object >>
+!define ENUM(enumName) class enumName << Enum >>
+!pragma useVerticalIf on
+
+skinparam dpi 350
+skinparam packageStyle rectangle
+
+skinparam rectangle {
+    BackgroundColor #f7f4eb
+    BorderColor Black
+}
+rectangle "Library Management" as BoundedContextSocialMedia #line.dashed {
+    package "Membership Sub-Domain" #FFCDD2 {
+        AGGREGATE(Member) #lightblue {
+            memberId: UUID
+            firstname: String
+            lastname: String
+            email: String
+        }
+
+        VALUE_OBJECT(Address) #Bisque {
+            street: String
+            city: String
+            postal: String
+            province: String
+        }
+
+        VALUE_OBJECT(Phone) #Bisque {
+            number: String
+            type: PhoneType
+        }
+
+        ENUM(PhoneType) #SandyBrown {
+            MOBILE,
+            HOME,
+            WORK
+        }
+
+        VALUE_OBJECT(MemberIdentifier) #Bisque {
+            memberId: UUID
+        }
+
+        Member "1" o--> "1" MemberIdentifier
+        Member --> Address
+        Member --> Phone
+
+        Phone --> PhoneType
+    }
+
+    package "Author Sub-Domain" #SeaGreen {
+        ENTITY(Author) #lightblue {
+            authorId: UUID
+            first_name: String
+            last_name: String
+            pseudonym: String
+        }
+
+        VALUE_OBJECT(AuthorIdentifier) #Bisque {
+            authorId: UUID
+        }
+
+        Author "1" o--> "1" AuthorIdentifier
+    }
+
+    package "Book Sub-Domain" #IndianRed {
+        AGGREGATE_ROOT(Book) #lightblue {
+            bookId: UUID
+            title: String
+            genre: String
+            release_date: DateTime
+            availabilityStatus: BookStatus
+        }
+
+        VALUE_OBJECT(BookIdentifier) #Bisque {
+            bookId: UUID
+        }
+
+        VALUE_OBJECT(BookDetails) #Bisque {
+            author: Author
+            description: String
+        }
+
+        ENTITY(BookTransaction) #lightblue {
+            transactionId: UUID
+            memberId: UUID
+            transactionType: String
+            transactionDate: DateTime
+        }
+
+        ENUM(BookStatus) #SandyBrown {
+            AVAILABLE,
+            BORROWED,
+            DAMAGED
+        }
+
+        Book "1" o--> "1" BookIdentifier
+        Book --> BookDetails
+        Book "1" o--> "1" BookTransaction
+        Book --> BookStatus
+    }
+
+    package "Transaction Sub-Domain" #Wheat {
+        ENTITY(TransactionDetails) #lightblue {
+            amount: Decimal
+            transactionType: String
+        }
+
+        VALUE_OBJECT(TransactionDate) #Bisque {
+            date: DateTime
+        }
+
+        VALUE_OBJECT(TransactionIdentifier) #Bisque {
+            transactionId: UUID
+        }
+
+        ENUM(TransactionStatus) #SandyBrown {
+            PENDING,
+            COMPLETED,
+            CANCELED
+        }
+
+        TransactionDetails --> TransactionIdentifier
+        TransactionDetails --> TransactionDate
+        TransactionDetails --> TransactionStatus
+    }
+
+    Book "1" o--> "1" AuthorIdentifier
+}
+
+@enduml
