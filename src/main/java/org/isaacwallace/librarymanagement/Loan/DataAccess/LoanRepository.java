@@ -1,4 +1,7 @@
 package org.isaacwallace.librarymanagement.Loan.DataAccess;
 
-public interface LoanRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LoanRepository extends JpaRepository<Loan, Long> {
+    Loan findLoanByLoanIdentifier_LoanId(String loanId);
 }
