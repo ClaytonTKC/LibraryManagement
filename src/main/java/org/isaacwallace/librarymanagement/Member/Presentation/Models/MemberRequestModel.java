@@ -10,8 +10,8 @@ import org.springframework.hateoas.RepresentationModel;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberRequestModel extends RepresentationModel<MemberRequestModel> {
-    String firstName;
-    String lastName;
+    String first_name;
+    String last_name;
 
     String email;
 
