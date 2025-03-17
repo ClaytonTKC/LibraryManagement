@@ -38,7 +38,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = this.memberRepository.findMemberByMemberIdentifier_Memberid(memberid);
 
         if (member == null) {
-            throw new InvalidInputException("Unknow memberid: " + memberid);
+            throw new InvalidInputException("Unknown memberid: " + memberid);
         }
 
         return this.memberResponseMapper.entityToResponseModel(member);
@@ -54,7 +54,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = this.memberRepository.findMemberByMemberIdentifier_Memberid(memberid);
 
         if (member == null) {
-            throw new InvalidInputException("Unknow memberid: " + memberid);
+            throw new InvalidInputException("Unknown memberid: " + memberid);
         }
 
         this.memberRequestMapper.updateEntityFromRequest(memberRequestModel, member);
@@ -70,7 +70,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = this.memberRepository.findMemberByMemberIdentifier_Memberid(memberid);
 
         if (member == null) {
-            throw new InvalidInputException("Unknow memberid: " + memberid);
+            throw new InvalidInputException("Unknown memberid: " + memberid);
         }
 
         try {
