@@ -47,7 +47,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponseModel addMember(MemberRequestModel memberRequestModel) {
         Member member = this.memberRequestMapper.requestModelToEntity(memberRequestModel, new MemberIdentifier());
 
-        return memberResponseMapper.entityToResponseModel(this.memberRepository.save(member));
+        return this.memberResponseMapper.entityToResponseModel(this.memberRepository.save(member));
     }
 
     public MemberResponseModel updateMember(String memberid, MemberRequestModel memberRequestModel) {
