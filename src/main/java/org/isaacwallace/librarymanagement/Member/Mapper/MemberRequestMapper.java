@@ -12,6 +12,6 @@ public interface MemberRequestMapper {
     @Mapping(target = "id", ignore = true)
     Member requestModelToEntity(MemberRequestModel memberRequestModel, MemberIdentifier memberIdentifier);
 
-    @Mapping(target = "id", ignore = true) // ensure id is not updated
+    @Mapping(target = "id", ignore = true)
     void updateEntityFromRequest(MemberRequestModel memberRequestModel, @MappingTarget Member member);
 }

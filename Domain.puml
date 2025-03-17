@@ -147,12 +147,13 @@ rectangle "Library Management" as BoundedContextSocialMedia #line.dashed {
             authoId: UUID
             title: String
             genre: String
+            publisher: String
             released: DateTime
             availability: BookStatus
         }
 
         VALUE_OBJECT(BookIdentifier) #Bisque {
-            bookId: UUID
+            isbn: UUID
         }
 
         ENUM(BookStatus) #SandyBrown {
