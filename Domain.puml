@@ -8,6 +8,7 @@ top to bottom direction
 !define AGGREGATE(aggregateName) class aggregateName << Aggregate >>
 !define AGGREGATE_ROOT(aggregateRootName) class aggregateRootName << Aggregate Root >>
 !define VALUE_OBJECT(valueObjectName) class valueObjectName << Value Object >>
+!define ENUM(enumName) class enumName << Enum >>
 !pragma useVerticalIf on
 
 skinparam dpi 350
@@ -19,24 +20,38 @@ skinparam rectangle {
 }
 
 Package "Member Management" <<Rectangle>> #FFCDD2 {
-    AGGREGATE_ROOT(Member) #lightblue {
-        name: String
-        phoneNumber: String
+    AGGREGATE(Member) #lightblue {
+        firstname: String
+        lastname: String
+        email: String
     }
 
     VALUE_OBJECT(Address) #Bisque {
-        streetName: String
-        cityName: String
-        zipCode: String
-        countryName: String
+        street: String
+        city: String
+        postal: String
+        province: String
+    }
+
+    VALUE_OBJECT(Phone) #Bisque {
+        number: String
+        type: PhoneType
+    }
+
+    ENUM(PhoneType) #SandyBrown {
+        MOBILE,
+        HOME,
+        WORK
     }
 
     VALUE_OBJECT(LibraryCard) #Bisque {
-        cardId: UUID
+        memberId: UUID
     }
 
     Member --> LibraryCard
     Member --> Address
+    Member --> Phone
+    Phone --> PhoneType
 }
 
 Package "Book Lending" <<Rectangle>> #F5D76E {

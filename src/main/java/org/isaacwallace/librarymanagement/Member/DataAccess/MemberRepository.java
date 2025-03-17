@@ -1,4 +1,7 @@
 package org.isaacwallace.librarymanagement.Member.DataAccess;
 
-public interface MemberRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MemberRepository extends JpaRepository<Member,Integer> {
+    Member findMemberByMemberIdentifier_Memberid(String memberid);
 }
