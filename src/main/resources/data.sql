@@ -10,3 +10,17 @@ VALUES
     ('823e4567-e89b-12d3-a456-556642440007', 'Sophia', 'Garcia', 'sophia.garcia@example.com', '963 Spruce Road', 'Quebec City', 'G1P 3T5', 'Quebec', '514-856-2541', 'MOBILE'),
     ('923e4567-e89b-12d3-a456-556642440008', 'Daniel', 'Martinez', 'daniel.martinez@example.com', '654 Oak Lane', 'Fredericton', 'E1A 4R7', 'New Brunswick', '514-313-5123', 'MOBILE'),
     ('a23e4567-e89b-12d3-a456-556642440009', 'Jessica', 'Kim', 'jessica.kim@example.com', '852 Pinecrest Boulevard', 'St. Johns', 'A1A 5W3', 'Newfoundland and Labrador', '514-512-6452', 'HOME');
+
+
+INSERT INTO authors (authorid, first_name, last_name, pseudonym)
+VALUES
+    ('AUTH001', 'Isaac', 'Asimov', NULL),
+    ('AUTH002', 'J.K.', 'Rowling', 'Robert Galbraith'),
+    ('AUTH003', 'George', 'Orwell', NULL),
+    ('AUTH004', 'Agatha', 'Christie', NULL),
+    ('AUTH005', 'Mark', 'Twain', 'Samuel Clemens'),
+    ('AUTH006', 'Stephen', 'King', 'Richard Bachman'),
+    ('AUTH007', 'Jane', 'Austen', NULL),
+    ('AUTH008', 'Ernest', 'Hemingway', NULL),
+    ('AUTH009', 'Mary', 'Shelley', NULL),
+    ('AUTH010', 'H.G.', 'Wells', NULL);
