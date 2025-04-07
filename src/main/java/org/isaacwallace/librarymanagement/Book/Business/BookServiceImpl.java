@@ -9,6 +9,7 @@ import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookRequestMo
 import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InUseException;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
+import org.isaacwallace.librarymanagement.Utils.Exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -38,7 +39,7 @@ public class BookServiceImpl implements BookService {
         Book book = this.bookRepository.findBookByBookIdentifier_Bookid(bookid);
 
         if (book == null) {
-            throw new InvalidInputException("Unknown bookid: " + bookid);
+            throw new NotFoundException("Unknown bookid: " + bookid);
         }
 
         return this.bookResponseMapper.entityToResponseModel(book);
@@ -54,7 +55,7 @@ public class BookServiceImpl implements BookService {
         Book book = this.bookRepository.findBookByBookIdentifier_Bookid(bookid);
 
         if (book == null) {
-            throw new InvalidInputException("Unknown bookid: " + bookid);
+            throw new NotFoundException("Unknown bookid: " + bookid);
         }
 
         this.bookRequestMapper.updateEntityFromRequest(bookRequestModel, book);
@@ -68,7 +69,7 @@ public class BookServiceImpl implements BookService {
         Book book = this.bookRepository.findBookByBookIdentifier_Bookid(bookid);
 
         if (book == null) {
-            throw new InvalidInputException("Unknown bookid: " + bookid);
+            throw new NotFoundException("Unknown bookid: " + bookid);
         }
 
         try {

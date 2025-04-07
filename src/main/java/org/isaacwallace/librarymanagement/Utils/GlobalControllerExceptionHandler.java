@@ -28,7 +28,7 @@ public class GlobalControllerExceptionHandler {
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(InUseException.class)
-    public HttpErrorInfo handleInUse(WebRequest request, Exception ex){
+    public HttpErrorInfo handleInUseException(WebRequest request, Exception ex){
         return createHttpErrorInfo(HttpStatus.UNPROCESSABLE_ENTITY, request, ex);
     }
 }

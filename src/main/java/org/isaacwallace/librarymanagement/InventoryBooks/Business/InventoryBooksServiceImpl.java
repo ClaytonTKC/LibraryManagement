@@ -9,6 +9,7 @@ import org.isaacwallace.librarymanagement.Inventory.DataAccess.InventoryReposito
 import org.isaacwallace.librarymanagement.Inventory.Mapper.InventoryResponseMapper;
 import org.isaacwallace.librarymanagement.InventoryBooks.Presentation.Models.InventoryBooksResponseModel;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
+import org.isaacwallace.librarymanagement.Utils.Exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class InventoryBooksServiceImpl implements InventoryBooksService {
         Inventory inventory = this.inventoryRepository.findInventoryByInventoryIdentifier_Inventoryid(inventoryid);
 
         if (inventory == null) {
-            throw new InvalidInputException("Unknown inventoryid: " + inventoryid);
+            throw new NotFoundException("Unknown inventoryid: " + inventoryid);
         }
 
         List<BookResponseModel> books = this.bookResponseMapper.entitiesToResponseModelList(this.bookRepository.findBooksByInventoryid(inventoryid));

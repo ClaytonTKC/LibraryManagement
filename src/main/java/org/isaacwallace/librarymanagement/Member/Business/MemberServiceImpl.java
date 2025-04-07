@@ -9,6 +9,7 @@ import org.isaacwallace.librarymanagement.Member.Presentation.Models.MemberReque
 import org.isaacwallace.librarymanagement.Member.Presentation.Models.MemberResponseModel;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InUseException;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
+import org.isaacwallace.librarymanagement.Utils.Exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -38,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = this.memberRepository.findMemberByMemberIdentifier_Memberid(memberid);
 
         if (member == null) {
-            throw new InvalidInputException("Unknown memberid: " + memberid);
+            throw new NotFoundException("Unknown memberid: " + memberid);
         }
 
         return this.memberResponseMapper.entityToResponseModel(member);
@@ -54,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = this.memberRepository.findMemberByMemberIdentifier_Memberid(memberid);
 
         if (member == null) {
-            throw new InvalidInputException("Unknown memberid: " + memberid);
+            throw new NotFoundException("Unknown memberid: " + memberid);
         }
 
         this.memberRequestMapper.updateEntityFromRequest(memberRequestModel, member);
@@ -70,7 +71,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = this.memberRepository.findMemberByMemberIdentifier_Memberid(memberid);
 
         if (member == null) {
-            throw new InvalidInputException("Unknown memberid: " + memberid);
+            throw new NotFoundException("Unknown memberid: " + memberid);
         }
 
         try {

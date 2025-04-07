@@ -9,6 +9,7 @@ import org.isaacwallace.librarymanagement.Transaction.Presentation.Models.Transa
 import org.isaacwallace.librarymanagement.Transaction.Presentation.Models.TransactionResponseModel;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InUseException;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
+import org.isaacwallace.librarymanagement.Utils.Exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -39,7 +40,7 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction transaction = this.transactionRepository.findTransactionByTransactionIdentifier_Transactionid(transactionid);
 
         if (transaction == null) {
-            throw new InvalidInputException("Unknown transaction id " + transactionid);
+            throw new NotFoundException("Unknown transaction id " + transactionid);
         }
 
         return this.transactionResponseMapper.entityToResponseModel(transaction);
@@ -55,7 +56,7 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction transaction = this.transactionRepository.findTransactionByTransactionIdentifier_Transactionid(transactionid);
 
         if (transaction == null) {
-            throw new InvalidInputException("Unknown transaction id " + transactionid);
+            throw new NotFoundException("Unknown transaction id " + transactionid);
         }
 
         this.transactionRequestMapper.updateEntityFromRequest(transactionRequestModel, transaction);
@@ -71,7 +72,7 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction transaction = this.transactionRepository.findTransactionByTransactionIdentifier_Transactionid(transactionid);
 
         if (transaction == null) {
-            throw new InvalidInputException("Unknown transaction id " + transactionid);
+            throw new NotFoundException("Unknown transaction id " + transactionid);
         }
 
         try {

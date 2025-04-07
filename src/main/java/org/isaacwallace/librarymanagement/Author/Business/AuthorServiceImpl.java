@@ -11,6 +11,7 @@ import org.isaacwallace.librarymanagement.Member.DataAccess.Member;
 import org.isaacwallace.librarymanagement.Member.Presentation.Models.MemberResponseModel;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InUseException;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
+import org.isaacwallace.librarymanagement.Utils.Exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -40,7 +41,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = this.authorRepository.findAuthorByAuthorIdentifier_Authorid(authorid);
 
         if (author == null) {
-            throw new InvalidInputException("Unknow memberid: " + authorid);
+            throw new NotFoundException("Unknow memberid: " + authorid);
         }
 
         return this.authorResponseMapper.entityToResponseModel(author);
@@ -56,7 +57,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = this.authorRepository.findAuthorByAuthorIdentifier_Authorid(authorid);
 
         if (author == null) {
-            throw new InvalidInputException("Unknow authorid: " + authorid);
+            throw new NotFoundException("Unknow authorid: " + authorid);
         }
 
         this.authorRequestMapper.updateEntityFromRequest(authorRequestModel, author);
@@ -72,7 +73,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = this.authorRepository.findAuthorByAuthorIdentifier_Authorid(authorid);
 
         if (author == null) {
-            throw new InvalidInputException("Unknow authorid: " + authorid);
+            throw new NotFoundException("Unknow authorid: " + authorid);
         }
 
         try {

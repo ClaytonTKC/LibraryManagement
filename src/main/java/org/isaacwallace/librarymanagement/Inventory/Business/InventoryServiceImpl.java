@@ -9,6 +9,7 @@ import org.isaacwallace.librarymanagement.Inventory.Presentation.Models.Inventor
 import org.isaacwallace.librarymanagement.Inventory.Presentation.Models.InventoryResponseModel;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InUseException;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
+import org.isaacwallace.librarymanagement.Utils.Exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -38,7 +39,7 @@ public class InventoryServiceImpl implements InventoryService {
         Inventory inventory = this.inventoryRepository.findInventoryByInventoryIdentifier_Inventoryid(inventoryid);
 
         if (inventory == null) {
-            throw new InvalidInputException("Unknown inventoryid: " + inventoryid);
+            throw new NotFoundException("Unknown inventoryid: " + inventoryid);
         }
 
         return this.inventoryResponseMapper.entityToResponseModel(inventory);
@@ -54,7 +55,7 @@ public class InventoryServiceImpl implements InventoryService {
         Inventory inventory = this.inventoryRepository.findInventoryByInventoryIdentifier_Inventoryid(inventoryid);
 
         if (inventory == null) {
-            throw new InvalidInputException("Unknown inventoryid: " + inventoryid);
+            throw new NotFoundException("Unknown inventoryid: " + inventoryid);
         }
 
         this.inventoryRequestMapper.updateEntityFromRequest(inventoryRequestModel, inventory);
@@ -74,7 +75,7 @@ public class InventoryServiceImpl implements InventoryService {
         Inventory inventory = this.inventoryRepository.findInventoryByInventoryIdentifier_Inventoryid(inventoryid);
 
         if (inventory == null) {
-            throw new InvalidInputException("Unknown inventoryid: " + inventoryid);
+            throw new NotFoundException("Unknown inventoryid: " + inventoryid);
         }
 
         try {
