@@ -11,6 +11,7 @@ public class BookResponseModel extends RepresentationModel<BookResponseModel> {
     private String bookid;
     private String authorid;
     private String inventoryid;
+    private String memberid;
 
     private String title;
     private String genre;

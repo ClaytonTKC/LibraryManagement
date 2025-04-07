@@ -28,6 +28,8 @@ public interface AuthorResponseMapper {
     default void addLinks(@MappingTarget AuthorResponseModel authorResponseModel, Author author) {
         Link selfLink = linkTo(methodOn(AuthorController.class).getAuthorById(author.getAuthorIdentifier().getAuthorid())).withSelfRel();
         authorResponseModel.add(selfLink);
-    }
 
+        Link allLink = linkTo(methodOn(AuthorController.class).getAllAuthors()).withRel("authors");
+        authorResponseModel.add(allLink);
+    }
 }

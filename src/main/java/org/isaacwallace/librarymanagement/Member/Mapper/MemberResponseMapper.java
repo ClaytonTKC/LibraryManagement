@@ -24,5 +24,8 @@ public interface MemberResponseMapper {
     default void addLinks(@MappingTarget MemberResponseModel memberResponseModel, Member member) {
         Link selfLink = linkTo(methodOn(MemberController.class).getMemberById(member.getMemberIdentifier().getMemberid())).withSelfRel();
         memberResponseModel.add(selfLink);
+
+        Link allLink = linkTo(methodOn(MemberController.class).getAllMembers()).withRel("members");
+        memberResponseModel.add(allLink);
     }
 }

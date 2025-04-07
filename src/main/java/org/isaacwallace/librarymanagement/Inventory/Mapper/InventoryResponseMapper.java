@@ -29,6 +29,9 @@ public interface InventoryResponseMapper {
         Link selfLink = linkTo(methodOn(InventoryController.class).getInventoryById(inventory.getInventoryIdentifier().getInventoryid())).withSelfRel();
         inventoryResponseModel.add(selfLink);
 
+        Link allLink = linkTo(methodOn(InventoryController.class).getAllInventories()).withRel("inventories");
+        inventoryResponseModel.add(allLink);
+
         Link bookLink = linkTo(methodOn(BookController.class).getBookById(inventory.getBookid())).withRel("book");
         inventoryResponseModel.add(bookLink);
 

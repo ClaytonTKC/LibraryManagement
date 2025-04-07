@@ -27,6 +27,9 @@ public interface TransactionResponseMapper {
         Link selfLink = linkTo(methodOn(TransactionController.class).getTransactionById(transaction.getTransactionIdentifier().getTransactionid())).withSelfRel();
         transactionResponseModel.add(selfLink);
 
+        Link allLink = linkTo(methodOn(TransactionController.class).getAllTransactions()).withRel("transactions");
+        transactionResponseModel.add(allLink);
+
         Link memberLink = linkTo(methodOn(MemberController.class).getMemberById(transaction.getMemberid())).withRel("member");
         transactionResponseModel.add(memberLink);
 

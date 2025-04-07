@@ -36,12 +36,12 @@ CREATE TABLE IF NOT EXISTS books (
     bookid VARCHAR(50) UNIQUE NOT NULL,
     authorid VARCHAR(50) NOT NULL,
     inventoryid VARCHAR(50) NOT NULL,
+    memberid VARCHAR(50),
     title VARCHAR(255) NOT NULL,
     genre VARCHAR(100),
     publisher VARCHAR(100),
     released TIMESTAMP,
-    availability VARCHAR(50),
-    renterid VARCHAR(50)
+    availability VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS transactions (

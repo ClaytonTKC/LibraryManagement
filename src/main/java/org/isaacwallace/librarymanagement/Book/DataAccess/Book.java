@@ -21,6 +21,7 @@ public class Book {
 
     private String authorid;
     private String inventoryid;
+    private String memberid;
 
     private String title;
     private String genre;
@@ -31,6 +32,4 @@ public class Book {
 
     @Enumerated(EnumType.STRING)
     private BookStatus availability;
-
-    private String renterid;
 }
