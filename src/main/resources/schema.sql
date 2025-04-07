@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS inventories;
 DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS transactions;
 DROP TABLE IF EXISTS authors;
+DROP TABLE IF EXISTS employees;
 
 CREATE TABLE IF NOT EXISTS members (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -39,7 +40,8 @@ CREATE TABLE IF NOT EXISTS books (
     genre VARCHAR(100),
     publisher VARCHAR(100),
     released TIMESTAMP,
-    availability VARCHAR(50)
+    availability VARCHAR(50),
+    renterid VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS transactions (
@@ -64,4 +66,19 @@ CREATE TABLE IF NOT EXISTS authors(
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     pseudonym VARCHAR(50)
-)
+);
+
+CREATE TABLE IF NOT EXISTS employees (
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+
+    employeeid VARCHAR (36) NOT NULL UNIQUE,
+
+    first_name VARCHAR (50),
+    last_name VARCHAR (50),
+
+    dob DATE,
+
+    email VARCHAR(255),
+    title VARCHAR(100),
+    salary DECIMAL(10, 2)
+);

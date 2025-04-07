@@ -31,4 +31,6 @@ public class Book {
 
     @Enumerated(EnumType.STRING)
     private BookStatus availability;
+
+    private String renterid;
 }

@@ -150,6 +150,7 @@ rectangle "Library Management" as BoundedContextSocialMedia #line.dashed {
             publisher: String
             released: DateTime
             availability: BookStatus
+            renter: UUID
         }
 
         VALUE_OBJECT(BookIdentifier) #Bisque {
@@ -164,6 +165,7 @@ rectangle "Library Management" as BoundedContextSocialMedia #line.dashed {
 
         Book "1" o--> "1" BookIdentifier
         Book --> BookStatus
+        Book "1" o--> "1" MemberIdentifier
 
         Inventory "1" o--> "1" InventoryIdentifier
         Inventory --> InventoryStatus
