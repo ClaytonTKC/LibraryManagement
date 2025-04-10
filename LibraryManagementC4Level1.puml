@@ -42,7 +42,7 @@ Rel(api_gateway, ts, "Uses", "HTTPS")
 Rel(api_gateway, es, "Uses", "HTTPS")
 Rel(api_gateway, is, "Uses", "HTTPS")
 Rel(api_gateway, as, "Uses", "HTTPS")
-Rel(api_gateway, es, "Uses", "HTTPS")
+Rel(api_gateway, ms, "Uses", "HTTPS")
 
 Rel(is, as, "Uses", "HTTPS")
 Rel(is, ms, "Uses", "HTTPS")
