@@ -43,6 +43,6 @@ public class EmployeeController {
 
     @PutMapping(value = "{employeeid}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EmployeeResponseModel> EditPost(@PathVariable String employeeid, @RequestBody EmployeeRequestModel employeeRequestModel) {
-        return ResponseEntity.status(HttpStatus.OK).body(this.employeeService.editEmployee(employeeid, employeeRequestModel));
+        return ResponseEntity.status(HttpStatus.OK).body(this.employeeService.updateEmployee(employeeid, employeeRequestModel));
     }
 }

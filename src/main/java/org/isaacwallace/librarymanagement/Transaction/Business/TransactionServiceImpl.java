@@ -31,6 +31,15 @@ public class TransactionServiceImpl implements TransactionService {
         this.transactionRequestMapper = tRequestMapper;
     }
 
+    private void validateBookInvariant(Transaction transaction) {
+        if (transaction.getBookid() == null) {
+            throw new InvalidInputException("Transaction must be associated with a book.");
+        }
+
+        if (transaction.getMemberid() == null) {
+            throw new InvalidInputException("Transaction must be associated with a member.");
+        }
+    }
 
     public List<TransactionResponseModel> getAllTransactions() {
         return this.transactionResponseMapper.entityToResponseModelList(transactionRepository.findAll());
@@ -49,6 +58,8 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionResponseModel addTransaction(TransactionRequestModel transactionRequestModel) {
         Transaction transaction = this.transactionRequestMapper.requestModelToEntity(transactionRequestModel, new TransactionIdentifier());
 
+        this.validateBookInvariant(transaction);
+
         return this.transactionResponseMapper.entityToResponseModel(this.transactionRepository.save(transaction));
     }
 
@@ -62,6 +73,8 @@ public class TransactionServiceImpl implements TransactionService {
         this.transactionRequestMapper.updateEntityFromRequest(transactionRequestModel, transaction);
 
         Transaction updatedTransaction = this.transactionRepository.save(transaction);
+
+        this.validateBookInvariant(transaction);
 
         logger.info("Updated transaction with id " + transactionid);
 

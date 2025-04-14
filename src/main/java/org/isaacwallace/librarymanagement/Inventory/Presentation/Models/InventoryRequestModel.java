@@ -10,7 +10,7 @@ import org.springframework.hateoas.RepresentationModel;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class InventoryRequestModel extends RepresentationModel<InventoryRequestModel> {
     String bookid;
-    String quantity;
+    Integer quantity;
 
     InventoryStatus status;
 }

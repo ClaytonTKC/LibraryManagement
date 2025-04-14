@@ -31,6 +31,16 @@ public class BookServiceImpl implements BookService {
         this.bookRequestMapper = bookRequestMapper;
     }
 
+    private void validateBookInvariant(Book book) {
+        if (book.getInventoryid() == null || book.getInventoryid().isEmpty()) {
+            throw new InvalidInputException("Book must be associated with an inventory.");
+        }
+
+        if ("available".equalsIgnoreCase(book.getAvailability().toString()) && book.getMemberid() != null) {
+            throw new InvalidInputException("Available books should not be assigned to a member.");
+        }
+    }
+
     public List<BookResponseModel> getAllBooks() {
         return this.bookResponseMapper.entityToResponseModelList(this.bookRepository.findAll());
     }
@@ -48,6 +58,8 @@ public class BookServiceImpl implements BookService {
     public BookResponseModel addBook(BookRequestModel bookRequestModel) {
         Book book = this.bookRequestMapper.requestModelToEntity(bookRequestModel, new BookIdentifier());
 
+        this.validateBookInvariant(book);
+
         return this.bookResponseMapper.entityToResponseModel(this.bookRepository.save(book));
     }
 
@@ -60,9 +72,13 @@ public class BookServiceImpl implements BookService {
 
         this.bookRequestMapper.updateEntityFromRequest(bookRequestModel, book);
 
+        this.validateBookInvariant(book);
+
+        Book updatedBook = this.bookRepository.save(book);
+
         logger.info("Updated book with bookid: " + bookid);
 
-        return this.bookResponseMapper.entityToResponseModel(book);
+        return this.bookResponseMapper.entityToResponseModel(updatedBook);
     }
 
     public void deleteBook(String bookid) {

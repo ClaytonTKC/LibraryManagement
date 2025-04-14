@@ -9,7 +9,7 @@ public class InventoryResponseModel extends RepresentationModel<InventoryRespons
     private String inventoryid;
 
     private String bookid;
-    private String quantity;
+    private Integer quantity;
 
     private InventoryStatus status;
 }

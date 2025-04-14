@@ -1,5 +1,6 @@
 package org.isaacwallace.librarymanagement.Inventory.Business;
 
+import org.isaacwallace.librarymanagement.Book.DataAccess.Book;
 import org.isaacwallace.librarymanagement.Inventory.DataAccess.Inventory;
 import org.isaacwallace.librarymanagement.Inventory.DataAccess.InventoryIdentifier;
 import org.isaacwallace.librarymanagement.Inventory.DataAccess.InventoryRepository;
@@ -31,6 +32,12 @@ public class InventoryServiceImpl implements InventoryService {
         this.inventoryRequestMapper = inventoryRequestMapper;
     }
 
+    private void validateBookInvariant(Inventory inventory) {
+        if (inventory.getQuantity() < 0) {
+            throw new InvalidInputException("Quantity must always be above 0. Invalid quantity: " + inventory.getQuantity());
+        }
+    }
+
     public List<InventoryResponseModel> getAllInventories() {
         return this.inventoryResponseMapper.entityToResponseModelList(this.inventoryRepository.findAll());
     }
@@ -48,6 +55,8 @@ public class InventoryServiceImpl implements InventoryService {
     public InventoryResponseModel addInventory(InventoryRequestModel inventoryRequestModel) {
         Inventory inventory = this.inventoryRequestMapper.requestModelToEntity(inventoryRequestModel, new InventoryIdentifier());
 
+        validateBookInvariant(inventory);
+
         return this.inventoryResponseMapper.entityToResponseModel(this.inventoryRepository.save(inventory));
     }
 
@@ -59,10 +68,6 @@ public class InventoryServiceImpl implements InventoryService {
         }
 
         this.inventoryRequestMapper.updateEntityFromRequest(inventoryRequestModel, inventory);
-
-        if (inventory.getId() < 0) { // Invariant HA
-            throw new InvalidInputException("Quantity must always be above 0. Invalid quantity: " + inventory.getQuantity());
-        }
 
         Inventory updatedInventory = this.inventoryRepository.save(inventory);
 

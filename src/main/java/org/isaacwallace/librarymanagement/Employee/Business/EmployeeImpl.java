@@ -1,5 +1,6 @@
 package org.isaacwallace.librarymanagement.Employee.Business;
 
+import org.isaacwallace.librarymanagement.Book.Business.BookServiceImpl;
 import org.isaacwallace.librarymanagement.Employee.DataAccess.Employee;
 import org.isaacwallace.librarymanagement.Employee.DataAccess.EmployeeIdentifier;
 import org.isaacwallace.librarymanagement.Employee.DataAccess.EmployeeRepository;
@@ -12,6 +13,9 @@ import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 @Service
@@ -19,6 +23,8 @@ public class EmployeeImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeResponseMapper employeeResponseMapper;
     private final EmployeeRequestMapper employeeRequestMapper;
+
+    private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
     public EmployeeImpl(EmployeeRepository employeeRepository, EmployeeResponseMapper employeeResponseMapper, EmployeeRequestMapper employeeRequestMapper) {
         this.employeeRepository = employeeRepository;
@@ -46,16 +52,18 @@ public class EmployeeImpl implements EmployeeService {
         return employeeResponseMapper.entityToResponseModel(newEmployee);
     }
 
-    public EmployeeResponseModel editEmployee(String employeeid, EmployeeRequestModel employeeRequestModel) {
+    public EmployeeResponseModel updateEmployee(String employeeid, EmployeeRequestModel employeeRequestModel) {
         Employee employee = this.employeeRepository.findEmployeeByEmployeeIdentifier_Employeeid(employeeid);
 
         if (employee == null) {
             throw new InvalidInputException("Unknown employeeid: " + employeeid);
         }
 
-        Employee updatedEmployee = this.employeeRequestMapper.requestModelToEntity(employeeRequestModel, employee.getEmployeeIdentifier());
+        this.employeeRequestMapper.updateEntityFromRequest(employeeRequestModel, employee);
 
-        this.employeeRepository.save(updatedEmployee);
+        Employee updatedEmployee = this.employeeRepository.save(employee);
+
+        logger.info("Updated employee with employeeid: " + employeeid);
 
         return this.employeeResponseMapper.entityToResponseModel(updatedEmployee);
     }
