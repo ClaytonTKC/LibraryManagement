@@ -55,7 +55,7 @@ public class InventoryServiceImpl implements InventoryService {
     public InventoryResponseModel addInventory(InventoryRequestModel inventoryRequestModel) {
         Inventory inventory = this.inventoryRequestMapper.requestModelToEntity(inventoryRequestModel, new InventoryIdentifier());
 
-        validateBookInvariant(inventory);
+        this.validateBookInvariant(inventory);
 
         return this.inventoryResponseMapper.entityToResponseModel(this.inventoryRepository.save(inventory));
     }
@@ -68,6 +68,8 @@ public class InventoryServiceImpl implements InventoryService {
         }
 
         this.inventoryRequestMapper.updateEntityFromRequest(inventoryRequestModel, inventory);
+
+        this.validateBookInvariant(inventory);
 
         Inventory updatedInventory = this.inventoryRepository.save(inventory);
 

@@ -4,7 +4,6 @@ import org.isaacwallace.librarymanagement.Book.DataAccess.Book;
 import org.isaacwallace.librarymanagement.Book.DataAccess.BookRepository;
 import org.isaacwallace.librarymanagement.Book.Mapper.BookResponseMapper;
 import org.isaacwallace.librarymanagement.BooksTransactions.Presentation.Models.BookTransactionResponseModel;
-import org.isaacwallace.librarymanagement.InventoryBooks.Presentation.Models.InventoryBooksResponseModel;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.TransactionRepository;
 import org.isaacwallace.librarymanagement.Transaction.Mapper.TransactionResponseMapper;
 import org.isaacwallace.librarymanagement.Transaction.Presentation.Models.TransactionResponseModel;
