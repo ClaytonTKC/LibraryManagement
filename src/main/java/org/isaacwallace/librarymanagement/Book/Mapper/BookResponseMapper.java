@@ -4,7 +4,11 @@ import org.isaacwallace.librarymanagement.Author.Presentation.AuthorController;
 import org.isaacwallace.librarymanagement.Book.DataAccess.Book;
 import org.isaacwallace.librarymanagement.Book.Presentation.BookController;
 import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
+import org.isaacwallace.librarymanagement.BooksTransactions.Presentation.BookTransactionController;
+import org.isaacwallace.librarymanagement.BooksTransactions.Presentation.Models.BookTransactionResponseModel;
+import org.isaacwallace.librarymanagement.Inventory.DataAccess.Inventory;
 import org.isaacwallace.librarymanagement.Inventory.Presentation.InventoryController;
+import org.isaacwallace.librarymanagement.InventoryBooks.Presentation.Models.InventoryBooksResponseModel;
 import org.isaacwallace.librarymanagement.Member.Presentation.MemberController;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -22,8 +26,8 @@ public interface BookResponseMapper {
     @Mapping(expression = "java(book.getBookIdentifier().getBookid())", target = "bookid")
     BookResponseModel entityToResponseModel(Book book);
     List<BookResponseModel> entityToResponseModelList(List<Book> books);
-
     List<BookResponseModel> entitiesToResponseModelList(List<Book> books);
+    BookTransactionResponseModel transactionToAggregateResponseModel(Book book);
 
     @AfterMapping
     default void addLinks(@MappingTarget BookResponseModel bookResponseModel, Book book) {
@@ -38,6 +42,9 @@ public interface BookResponseMapper {
 
         Link inventoryLink = linkTo(methodOn(InventoryController.class).getInventoryById(book.getInventoryid())).withRel("inventory");
         bookResponseModel.add(inventoryLink);
+
+        Link transactionsLink = linkTo(methodOn(BookTransactionController.class).getAllTransactions(book.getBookIdentifier().getBookid())).withRel("transactions");
+        bookResponseModel.add(transactionsLink);
 
         if (book.getMemberid() != null) {
             Link memberLink = linkTo(methodOn(MemberController.class).getMemberById(book.getMemberid())).withRel("member");

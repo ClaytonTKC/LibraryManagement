@@ -38,6 +38,7 @@ public class InventoryBooksServiceImpl implements InventoryBooksService {
         List<BookResponseModel> books = this.bookResponseMapper.entitiesToResponseModelList(this.bookRepository.findBooksByInventoryid(inventoryid));
         InventoryBooksResponseModel inventoryModel = this.inventoryResponseMapper.bookToAggregateResponseModel(inventory);
         inventoryModel.setBooks(books);
+        inventoryModel.setInventoryid(inventoryid);
 
         return inventoryModel;
     }
