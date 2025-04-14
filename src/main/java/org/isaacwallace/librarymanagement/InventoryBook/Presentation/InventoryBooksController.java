@@ -1,7 +1,7 @@
-package org.isaacwallace.librarymanagement.InventoryBooks.Presentation;
+package org.isaacwallace.librarymanagement.InventoryBook.Presentation;
 
-import org.isaacwallace.librarymanagement.InventoryBooks.Business.InventoryBooksService;
-import org.isaacwallace.librarymanagement.InventoryBooks.Presentation.Models.InventoryBooksResponseModel;
+import org.isaacwallace.librarymanagement.InventoryBook.Business.InventoryBooksService;
+import org.isaacwallace.librarymanagement.InventoryBook.Presentation.Models.InventoryBooksResponseModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

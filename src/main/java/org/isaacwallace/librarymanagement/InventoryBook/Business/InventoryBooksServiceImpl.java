@@ -1,14 +1,12 @@
-package org.isaacwallace.librarymanagement.InventoryBooks.Business;
+package org.isaacwallace.librarymanagement.InventoryBook.Business;
 
-import org.isaacwallace.librarymanagement.Book.DataAccess.Book;
 import org.isaacwallace.librarymanagement.Book.DataAccess.BookRepository;
 import org.isaacwallace.librarymanagement.Book.Mapper.BookResponseMapper;
 import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
 import org.isaacwallace.librarymanagement.Inventory.DataAccess.Inventory;
 import org.isaacwallace.librarymanagement.Inventory.DataAccess.InventoryRepository;
 import org.isaacwallace.librarymanagement.Inventory.Mapper.InventoryResponseMapper;
-import org.isaacwallace.librarymanagement.InventoryBooks.Presentation.Models.InventoryBooksResponseModel;
-import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
+import org.isaacwallace.librarymanagement.InventoryBook.Presentation.Models.InventoryBooksResponseModel;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 

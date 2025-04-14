@@ -1,6 +1,7 @@
 package org.isaacwallace.librarymanagement.Inventory.Business;
 
-import org.isaacwallace.librarymanagement.Book.DataAccess.Book;
+import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
+import org.isaacwallace.librarymanagement.DomainClient.BookServiceClient;
 import org.isaacwallace.librarymanagement.Inventory.DataAccess.Inventory;
 import org.isaacwallace.librarymanagement.Inventory.DataAccess.InventoryIdentifier;
 import org.isaacwallace.librarymanagement.Inventory.DataAccess.InventoryRepository;
@@ -24,12 +25,15 @@ public class InventoryServiceImpl implements InventoryService {
     private final InventoryResponseMapper inventoryResponseMapper;
     private final InventoryRequestMapper inventoryRequestMapper;
 
+    private final BookServiceClient bookServiceClient;
+
     private static final Logger logger = LoggerFactory.getLogger(InventoryServiceImpl.class);
 
-    public InventoryServiceImpl(InventoryRepository inventoryRepository, InventoryResponseMapper inventoryResponseMapper, InventoryRequestMapper inventoryRequestMapper) {
+    public InventoryServiceImpl(InventoryRepository inventoryRepository, InventoryResponseMapper inventoryResponseMapper, InventoryRequestMapper inventoryRequestMapper, BookServiceClient bookServiceClient) {
         this.inventoryRepository = inventoryRepository;
         this.inventoryResponseMapper = inventoryResponseMapper;
         this.inventoryRequestMapper = inventoryRequestMapper;
+        this.bookServiceClient = bookServiceClient;
     }
 
     private void validateBookInvariant(Inventory inventory) {
@@ -53,6 +57,12 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     public InventoryResponseModel addInventory(InventoryRequestModel inventoryRequestModel) {
+        BookResponseModel book = this.bookServiceClient.getBookByBookId(inventoryRequestModel.getBookid());
+
+        if (book == null) {
+            throw new NotFoundException("Unknown bookid: " + inventoryRequestModel.getBookid());
+        }
+
         Inventory inventory = this.inventoryRequestMapper.requestModelToEntity(inventoryRequestModel, new InventoryIdentifier());
 
         this.validateBookInvariant(inventory);

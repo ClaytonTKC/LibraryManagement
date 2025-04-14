@@ -138,8 +138,7 @@ rectangle "Library Management" as BoundedContextSocialMedia #line.dashed {
 
         ENUM(InventoryStatus) #SandyBrown {
             AVAILABLE,
-            DAMAGED,
-            LOST
+            UNAVAILABLE
         }
 
         ENTITY(Book) #lightblue {

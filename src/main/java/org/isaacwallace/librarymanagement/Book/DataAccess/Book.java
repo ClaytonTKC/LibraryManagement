@@ -29,7 +29,4 @@ public class Book {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime released;
-
-    @Enumerated(EnumType.STRING)
-    private BookStatus availability;
 }

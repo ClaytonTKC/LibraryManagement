@@ -13,12 +13,11 @@ import java.time.LocalDateTime;
 public class BookRequestModel extends RepresentationModel<BookRequestModel> {
     String authorid;
     String inventoryid;
+    String memberid;
 
     String title;
     String genre;
     String publisher;
 
     LocalDateTime released;
-
-    BookStatus availability;
 }

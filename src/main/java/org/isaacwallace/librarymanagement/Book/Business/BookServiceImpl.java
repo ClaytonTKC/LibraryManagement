@@ -1,5 +1,6 @@
 package org.isaacwallace.librarymanagement.Book.Business;
 
+import org.isaacwallace.librarymanagement.Author.Presentation.Models.AuthorResponseModel;
 import org.isaacwallace.librarymanagement.Book.DataAccess.Book;
 import org.isaacwallace.librarymanagement.Book.DataAccess.BookIdentifier;
 import org.isaacwallace.librarymanagement.Book.DataAccess.BookRepository;
@@ -7,6 +8,7 @@ import org.isaacwallace.librarymanagement.Book.Mapper.BookRequestMapper;
 import org.isaacwallace.librarymanagement.Book.Mapper.BookResponseMapper;
 import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookRequestModel;
 import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
+import org.isaacwallace.librarymanagement.DomainClient.AuthorServiceClient;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InUseException;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.NotFoundException;
@@ -23,21 +25,20 @@ public class BookServiceImpl implements BookService {
     private final BookResponseMapper bookResponseMapper;
     private final BookRequestMapper bookRequestMapper;
 
+    private final AuthorServiceClient authorServiceClient;
+
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
-    public BookServiceImpl(BookRepository bookRepository, BookResponseMapper bookResponseMapper, BookRequestMapper bookRequestMapper) {
+    public BookServiceImpl(BookRepository bookRepository, BookResponseMapper bookResponseMapper, BookRequestMapper bookRequestMapper, AuthorServiceClient authorServiceClient) {
         this.bookRepository = bookRepository;
         this.bookResponseMapper = bookResponseMapper;
         this.bookRequestMapper = bookRequestMapper;
+        this.authorServiceClient = authorServiceClient;
     }
 
     private void validateBookInvariant(Book book) {
         if (book.getInventoryid() == null || book.getInventoryid().isEmpty()) {
             throw new InvalidInputException("Book must be associated with an inventory.");
-        }
-
-        if ("available".equalsIgnoreCase(book.getAvailability().toString()) && book.getMemberid() != null) {
-            throw new InvalidInputException("Available books should not be assigned to a member.");
         }
     }
 
@@ -56,6 +57,12 @@ public class BookServiceImpl implements BookService {
     }
 
     public BookResponseModel addBook(BookRequestModel bookRequestModel) {
+        AuthorResponseModel author = this.authorServiceClient.getAuthorByAuthorId(bookRequestModel.getAuthorid());
+
+        if (author == null) {
+            throw new NotFoundException("Unknown authorid: " + bookRequestModel.getAuthorid());
+        }
+
         Book book = this.bookRequestMapper.requestModelToEntity(bookRequestModel, new BookIdentifier());
 
         this.validateBookInvariant(book);
@@ -74,11 +81,9 @@ public class BookServiceImpl implements BookService {
 
         this.validateBookInvariant(book);
 
-        Book updatedBook = this.bookRepository.save(book);
-
         logger.info("Updated book with bookid: " + bookid);
 
-        return this.bookResponseMapper.entityToResponseModel(updatedBook);
+        return this.bookResponseMapper.entityToResponseModel(this.bookRepository.save(book));
     }
 
     public void deleteBook(String bookid) {

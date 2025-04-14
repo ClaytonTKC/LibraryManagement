@@ -1,5 +1,7 @@
 package org.isaacwallace.librarymanagement.Transaction.Business;
 
+import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
+import org.isaacwallace.librarymanagement.DomainClient.BookServiceClient;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.Transaction;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.TransactionIdentifier;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.TransactionRepository;
@@ -23,12 +25,15 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionResponseMapper transactionResponseMapper;
     private final TransactionRequestMapper transactionRequestMapper;
 
+    private final BookServiceClient bookServiceClient;
+
     private static final Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
-    public TransactionServiceImpl(TransactionRepository tRepository, TransactionResponseMapper tResponseMapper, TransactionRequestMapper tRequestMapper) {
+    public TransactionServiceImpl(TransactionRepository tRepository, TransactionResponseMapper tResponseMapper, TransactionRequestMapper tRequestMapper, BookServiceClient bookServiceClient) {
         this.transactionRepository = tRepository;
         this.transactionResponseMapper = tResponseMapper;
         this.transactionRequestMapper = tRequestMapper;
+        this.bookServiceClient = bookServiceClient;
     }
 
     private void validateBookInvariant(Transaction transaction) {
@@ -64,6 +69,12 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     public TransactionResponseModel updateTransaction(String transactionid, TransactionRequestModel transactionRequestModel) {
+        BookResponseModel book = this.bookServiceClient.getBookByBookId(transactionRequestModel.getBookIdentifier().getBookid());
+
+        if (book == null) {
+
+        }
+
         Transaction transaction = this.transactionRepository.findTransactionByTransactionIdentifier_Transactionid(transactionid);
 
         if (transaction == null) {

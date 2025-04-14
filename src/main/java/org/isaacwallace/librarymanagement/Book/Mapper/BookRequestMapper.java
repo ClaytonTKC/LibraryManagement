@@ -9,9 +9,10 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface BookRequestMapper {
+
     @Mapping(target = "id", ignore = true)
     Book requestModelToEntity(BookRequestModel bookRequestModel, BookIdentifier bookIdentifier);
 
-    @Mapping(target = "id", ignore = true) // ensure id is not updated
+    @Mapping(target = "id", ignore = true)
     void updateEntityFromRequest(BookRequestModel bookRequestModel, @MappingTarget Book book);
 }

@@ -1,4 +1,4 @@
-package org.isaacwallace.librarymanagement.InventoryBooks.Presentation.Models;
+package org.isaacwallace.librarymanagement.InventoryBook.Presentation.Models;
 
 import lombok.Data;
 import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;

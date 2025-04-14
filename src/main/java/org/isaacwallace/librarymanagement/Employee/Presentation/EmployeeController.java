@@ -35,7 +35,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity DeleteEmployee(@RequestBody String employeeId) {
+    public ResponseEntity<EmployeeResponseModel> DeleteEmployee(@RequestBody String employeeId) {
         this.employeeService.deleteEmployee(employeeId);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
