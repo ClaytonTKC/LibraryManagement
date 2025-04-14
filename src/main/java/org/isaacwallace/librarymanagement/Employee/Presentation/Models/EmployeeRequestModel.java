@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
+import org.isaacwallace.librarymanagement.Employee.DataAccess.EmployeeTitle;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
@@ -18,6 +19,6 @@ public class EmployeeRequestModel extends RepresentationModel<EmployeeRequestMod
     LocalDate dob;
 
     String email;
-    String title;
+    EmployeeTitle title;
     Double salary;
 }

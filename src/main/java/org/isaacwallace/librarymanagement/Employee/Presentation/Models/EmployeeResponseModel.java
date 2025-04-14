@@ -1,6 +1,7 @@
 package org.isaacwallace.librarymanagement.Employee.Presentation.Models;
 
 import lombok.Data;
+import org.isaacwallace.librarymanagement.Employee.DataAccess.EmployeeTitle;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDate;
@@ -16,5 +17,6 @@ public class EmployeeResponseModel extends RepresentationModel<EmployeeResponseM
     private int age;
 
     private String email;
-    private String title;
+    private EmployeeTitle title;
+    private Double salary;
 }

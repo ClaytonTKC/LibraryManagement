@@ -25,10 +25,12 @@ public class Employee {
     private LocalDate dob;
 
     private String email;
-    private String title;
+
+    @Enumerated(EnumType.STRING)
+    private EmployeeTitle title;
     private Double salary;
 
-    public Employee(String first_name, String last_name, LocalDate dob, String email, String title, Double salary) {
+    public Employee(String first_name, String last_name, LocalDate dob, String email, EmployeeTitle title, Double salary) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.dob = dob;

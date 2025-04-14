@@ -55,7 +55,7 @@ rectangle "Library Management" as BoundedContextSocialMedia #line.dashed {
         Phone --> PhoneType
     }
 
-    package "Author Sub-Domain" #SeaGreen {
+    package "Author Sub-Domain" #LightGreen {
         ENTITY(Author) #lightblue {
             authorId: UUID
             first_name: String
@@ -173,7 +173,37 @@ rectangle "Library Management" as BoundedContextSocialMedia #line.dashed {
         Inventory --> BookStock
     }
 
+    package "Employee Sub-Domain" #Violet {
+        ENTITY(Employee) #lightblue {
+            employeeid: UUID
+            first_name: String
+            last_name: String
+            dob: DateTime
+            age: Integer
+            email: String
+            title: EmployeeTitle
+            salary: Double
+        }
+
+        ENUM(EmployeeTitle) #SandyBrown {
+            LIBRARIAN,
+            SUPERVISOR,
+            MANAGER,
+            ADMINISTRATOR
+        }
+
+        VALUE_OBJECT(EmployeeIdentifier) #Bisque {
+            isbn: UUID
+        }
+
+        Employee "1" o--> "1" EmployeeIdentifier
+        Employee --> EmployeeTitle
+    }
+
     Book "1" o--> "1" AuthorIdentifier
+    Book "1" o--> "*" TransactionIdentifier
+    Book "1" o--> "1" MemberIdentifier
+
     Transaction "1" o--> "1" BookIdentifier
     Transaction "1" o--> "1" MemberIdentifier
 }
