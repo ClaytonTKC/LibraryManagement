@@ -71,6 +71,12 @@ public class BookServiceImpl implements BookService {
     }
 
     public BookResponseModel updateBook(String bookid, BookRequestModel bookRequestModel) {
+        AuthorResponseModel author = this.authorServiceClient.getAuthorByAuthorId(bookRequestModel.getAuthorid());
+
+        if (author == null) {
+            throw new NotFoundException("Unknown authorid: " + bookRequestModel.getAuthorid());
+        }
+
         Book book = this.bookRepository.findBookByBookIdentifier_Bookid(bookid);
 
         if (book == null) {

@@ -2,6 +2,8 @@ package org.isaacwallace.librarymanagement.Transaction.Business;
 
 import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
 import org.isaacwallace.librarymanagement.DomainClient.BookServiceClient;
+import org.isaacwallace.librarymanagement.DomainClient.MemberServiceClient;
+import org.isaacwallace.librarymanagement.Member.Presentation.Models.MemberResponseModel;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.Transaction;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.TransactionIdentifier;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.TransactionRepository;
@@ -26,14 +28,17 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRequestMapper transactionRequestMapper;
 
     private final BookServiceClient bookServiceClient;
+    private final MemberServiceClient memberServiceClient;
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
-    public TransactionServiceImpl(TransactionRepository tRepository, TransactionResponseMapper tResponseMapper, TransactionRequestMapper tRequestMapper, BookServiceClient bookServiceClient) {
+    public TransactionServiceImpl(TransactionRepository tRepository, TransactionResponseMapper tResponseMapper, TransactionRequestMapper tRequestMapper, BookServiceClient bookServiceClient, MemberServiceClient memberServiceClient) {
         this.transactionRepository = tRepository;
         this.transactionResponseMapper = tResponseMapper;
         this.transactionRequestMapper = tRequestMapper;
+
         this.bookServiceClient = bookServiceClient;
+        this.memberServiceClient = memberServiceClient;
     }
 
     private void validateBookInvariant(Transaction transaction) {
@@ -61,6 +66,18 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     public TransactionResponseModel addTransaction(TransactionRequestModel transactionRequestModel) {
+        BookResponseModel book = this.bookServiceClient.getBookByBookId(transactionRequestModel.getBookIdentifier().getBookid());
+
+        if (book == null) {
+            throw new NotFoundException("Unknown bookid: " + transactionRequestModel.getBookIdentifier().getBookid());
+        }
+
+        MemberResponseModel member = this.memberServiceClient.getMemberByMemberId(transactionRequestModel.getMemberIdentifier().getMemberid());
+
+        if (member == null) {
+            throw new NotFoundException("Unknown memberid: " + transactionRequestModel.getMemberIdentifier().getMemberid());
+        }
+
         Transaction transaction = this.transactionRequestMapper.requestModelToEntity(transactionRequestModel, new TransactionIdentifier());
 
         this.validateBookInvariant(transaction);
@@ -72,7 +89,13 @@ public class TransactionServiceImpl implements TransactionService {
         BookResponseModel book = this.bookServiceClient.getBookByBookId(transactionRequestModel.getBookIdentifier().getBookid());
 
         if (book == null) {
+            throw new NotFoundException("Unknown bookid: " + transactionRequestModel.getBookIdentifier().getBookid());
+        }
 
+        MemberResponseModel member = this.memberServiceClient.getMemberByMemberId(transactionRequestModel.getMemberIdentifier().getMemberid());
+
+        if (member == null) {
+            throw new NotFoundException("Unknown memberid: " + transactionRequestModel.getMemberIdentifier().getMemberid());
         }
 
         Transaction transaction = this.transactionRepository.findTransactionByTransactionIdentifier_Transactionid(transactionid);
