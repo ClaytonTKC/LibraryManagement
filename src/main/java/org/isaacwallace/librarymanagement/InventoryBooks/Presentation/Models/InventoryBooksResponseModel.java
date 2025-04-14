@@ -12,7 +12,7 @@ public class InventoryBooksResponseModel extends RepresentationModel<InventoryBo
     private String inventoryid;
 
     private String bookid;
-    private String quantity;
+    private Integer quantity;
 
     private InventoryStatus status;
 
