@@ -53,6 +53,10 @@ public class TransactionServiceImpl implements TransactionService {
         if (transaction.getMemberid() == null) {
             throw new InvalidInputException("Transaction must be associated with a member.");
         }
+
+        if (transaction.getEmployeeid() == null) {
+            throw new InvalidInputException("Transaction must be associated with an employee.");
+        }
     }
 
     public List<TransactionResponseModel> getAllTransactions() {
