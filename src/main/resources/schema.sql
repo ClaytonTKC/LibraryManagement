@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS transactions (
 
     memberid VARCHAR(50) NOT NULL,
     bookid VARCHAR(50) NOT NULL,
+    employeeid VARCHAR(50) NOT NULL,
 
     transaction_date TIMESTAMP,
 

@@ -2,7 +2,9 @@ package org.isaacwallace.librarymanagement.Transaction.Business;
 
 import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
 import org.isaacwallace.librarymanagement.DomainClient.BookServiceClient;
+import org.isaacwallace.librarymanagement.DomainClient.EmployeeServiceClient;
 import org.isaacwallace.librarymanagement.DomainClient.MemberServiceClient;
+import org.isaacwallace.librarymanagement.Employee.Presentation.Models.EmployeeResponseModel;
 import org.isaacwallace.librarymanagement.Member.Presentation.Models.MemberResponseModel;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.Transaction;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.TransactionIdentifier;
@@ -29,16 +31,18 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final BookServiceClient bookServiceClient;
     private final MemberServiceClient memberServiceClient;
+    private final EmployeeServiceClient employeeServiceClient;
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
-    public TransactionServiceImpl(TransactionRepository tRepository, TransactionResponseMapper tResponseMapper, TransactionRequestMapper tRequestMapper, BookServiceClient bookServiceClient, MemberServiceClient memberServiceClient) {
-        this.transactionRepository = tRepository;
-        this.transactionResponseMapper = tResponseMapper;
-        this.transactionRequestMapper = tRequestMapper;
+    public TransactionServiceImpl(TransactionRepository transactionRepository, TransactionResponseMapper transactionResponseMapper, TransactionRequestMapper transactionRequestMapper, BookServiceClient bookServiceClient, MemberServiceClient memberServiceClient, EmployeeServiceClient employeeServiceClient) {
+        this.transactionRepository = transactionRepository;
+        this.transactionResponseMapper = transactionResponseMapper;
+        this.transactionRequestMapper = transactionRequestMapper;
 
         this.bookServiceClient = bookServiceClient;
         this.memberServiceClient = memberServiceClient;
+        this.employeeServiceClient = employeeServiceClient;
     }
 
     private void validateBookInvariant(Transaction transaction) {
@@ -66,16 +70,22 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     public TransactionResponseModel addTransaction(TransactionRequestModel transactionRequestModel) {
-        BookResponseModel book = this.bookServiceClient.getBookByBookId(transactionRequestModel.getBookIdentifier().getBookid());
+        BookResponseModel book = this.bookServiceClient.getBookByBookId(transactionRequestModel.getBookid());
 
         if (book == null) {
-            throw new NotFoundException("Unknown bookid: " + transactionRequestModel.getBookIdentifier().getBookid());
+            throw new NotFoundException("Unknown bookid: " + transactionRequestModel.getBookid());
         }
 
-        MemberResponseModel member = this.memberServiceClient.getMemberByMemberId(transactionRequestModel.getMemberIdentifier().getMemberid());
+        MemberResponseModel member = this.memberServiceClient.getMemberByMemberId(transactionRequestModel.getMemberid());
 
         if (member == null) {
-            throw new NotFoundException("Unknown memberid: " + transactionRequestModel.getMemberIdentifier().getMemberid());
+            throw new NotFoundException("Unknown memberid: " + transactionRequestModel.getMemberid());
+        }
+
+        EmployeeResponseModel employee = this.employeeServiceClient.getEmployeeByEmployeeid(transactionRequestModel.getEmployeeid());
+
+        if (employee == null) {
+            throw new NotFoundException("Unknown employeeid: " + transactionRequestModel.getEmployeeid());
         }
 
         Transaction transaction = this.transactionRequestMapper.requestModelToEntity(transactionRequestModel, new TransactionIdentifier());
@@ -86,16 +96,22 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     public TransactionResponseModel updateTransaction(String transactionid, TransactionRequestModel transactionRequestModel) {
-        BookResponseModel book = this.bookServiceClient.getBookByBookId(transactionRequestModel.getBookIdentifier().getBookid());
+        BookResponseModel book = this.bookServiceClient.getBookByBookId(transactionRequestModel.getBookid());
 
         if (book == null) {
-            throw new NotFoundException("Unknown bookid: " + transactionRequestModel.getBookIdentifier().getBookid());
+            throw new NotFoundException("Unknown bookid: " + transactionRequestModel.getBookid());
         }
 
-        MemberResponseModel member = this.memberServiceClient.getMemberByMemberId(transactionRequestModel.getMemberIdentifier().getMemberid());
+        MemberResponseModel member = this.memberServiceClient.getMemberByMemberId(transactionRequestModel.getMemberid());
 
         if (member == null) {
-            throw new NotFoundException("Unknown memberid: " + transactionRequestModel.getMemberIdentifier().getMemberid());
+            throw new NotFoundException("Unknown memberid: " + transactionRequestModel.getMemberid());
+        }
+
+        EmployeeResponseModel employee = this.employeeServiceClient.getEmployeeByEmployeeid(transactionRequestModel.getEmployeeid());
+
+        if (employee == null) {
+            throw new NotFoundException("Unknown employeeid: " + transactionRequestModel.getEmployeeid());
         }
 
         Transaction transaction = this.transactionRepository.findTransactionByTransactionIdentifier_Transactionid(transactionid);

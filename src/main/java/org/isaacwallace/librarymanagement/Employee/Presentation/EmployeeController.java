@@ -20,29 +20,29 @@ public class EmployeeController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<EmployeeResponseModel>> GetEmployees() {
+    public ResponseEntity<List<EmployeeResponseModel>> getEmployees() {
         return ResponseEntity.status(HttpStatus.OK).body(this.employeeService.getAllEmployees());
     }
 
     @GetMapping("{employeeid}")
-    public ResponseEntity<EmployeeResponseModel> GetEmployee(@PathVariable String employeeid) {
+    public ResponseEntity<EmployeeResponseModel> getEmployee(@PathVariable String employeeid) {
         return ResponseEntity.status(HttpStatus.OK).body(this.employeeService.getEmployeeById(employeeid));
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EmployeeResponseModel> AddUser(@RequestBody EmployeeRequestModel employeeRequestModel) {
+    public ResponseEntity<EmployeeResponseModel> addUser(@RequestBody EmployeeRequestModel employeeRequestModel) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.employeeService.addEmployee(employeeRequestModel));
     }
 
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EmployeeResponseModel> DeleteEmployee(@RequestBody String employeeId) {
+    public ResponseEntity<EmployeeResponseModel> deleteEmployee(@RequestBody String employeeId) {
         this.employeeService.deleteEmployee(employeeId);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     @PutMapping(value = "{employeeid}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<EmployeeResponseModel> EditPost(@PathVariable String employeeid, @RequestBody EmployeeRequestModel employeeRequestModel) {
+    public ResponseEntity<EmployeeResponseModel> updateEmployee(@PathVariable String employeeid, @RequestBody EmployeeRequestModel employeeRequestModel) {
         return ResponseEntity.status(HttpStatus.OK).body(this.employeeService.updateEmployee(employeeid, employeeRequestModel));
     }
 }

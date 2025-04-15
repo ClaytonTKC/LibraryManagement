@@ -23,6 +23,7 @@ public class Transaction {
 
     private String memberid;
     private String bookid;
+    private String employeeid;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime transactionDate;

@@ -30,10 +30,10 @@ public interface EmployeeResponseMapper {
 
     @AfterMapping
     default void addLinks(@MappingTarget EmployeeResponseModel postResponseModel, Employee employee) {
-        Link selfLink = linkTo(methodOn(EmployeeController.class).GetEmployee(employee.getEmployeeIdentifier().getEmployeeid())).withSelfRel();
+        Link selfLink = linkTo(methodOn(EmployeeController.class).getEmployee(employee.getEmployeeIdentifier().getEmployeeid())).withSelfRel();
         postResponseModel.add(selfLink);
 
-        Link allLink = linkTo(methodOn(EmployeeController.class).GetEmployees()).withRel("employees");
+        Link allLink = linkTo(methodOn(EmployeeController.class).getEmployees()).withRel("employees");
         postResponseModel.add(allLink);
     }
 }

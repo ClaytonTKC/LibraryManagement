@@ -12,8 +12,10 @@ import java.time.LocalDateTime;
 @Data
 public class TransactionResponseModel extends RepresentationModel<TransactionResponseModel> {
     private String transactionid;
+
     private String memberid;
     private String bookid;
+    private String employeeid;
 
     private LocalDateTime transactionDate;
 

@@ -3,6 +3,7 @@ package org.isaacwallace.librarymanagement.Transaction.Mapper;
 import org.isaacwallace.librarymanagement.Book.DataAccess.Book;
 import org.isaacwallace.librarymanagement.Book.Presentation.BookController;
 import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
+import org.isaacwallace.librarymanagement.Employee.Presentation.EmployeeController;
 import org.isaacwallace.librarymanagement.Member.Presentation.MemberController;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.Transaction;
 import org.isaacwallace.librarymanagement.Transaction.Presentation.Models.TransactionResponseModel;
@@ -38,5 +39,8 @@ public interface TransactionResponseMapper {
 
         Link bookLink = linkTo(methodOn(BookController.class).getBookById(transaction.getBookid())).withRel("book");
         transactionResponseModel.add(bookLink);
+
+        Link employeeLink = linkTo(methodOn(EmployeeController.class).getEmployee(transaction.getEmployeeid())).withRel("employee");
+        transactionResponseModel.add(employeeLink);
     }
 }
