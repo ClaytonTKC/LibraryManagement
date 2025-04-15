@@ -37,8 +37,8 @@ public class BookServiceImpl implements BookService {
     }
 
     private void validateBookInvariant(Book book) {
-        if (book.getInventoryid() == null || book.getInventoryid().isEmpty()) {
-            throw new InvalidInputException("Book must be associated with an inventory.");
+        if (book.getAuthorid() == null || book.getAuthorid().isEmpty()) {
+            throw new InvalidInputException("Book must be associated with an author.");
         }
     }
 

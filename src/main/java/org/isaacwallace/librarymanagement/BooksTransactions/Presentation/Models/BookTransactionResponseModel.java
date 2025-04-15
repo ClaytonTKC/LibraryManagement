@@ -1,7 +1,6 @@
 package org.isaacwallace.librarymanagement.BooksTransactions.Presentation.Models;
 
 import lombok.Data;
-import org.isaacwallace.librarymanagement.Book.DataAccess.BookStatus;
 import org.isaacwallace.librarymanagement.Transaction.Presentation.Models.TransactionResponseModel;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -13,15 +12,12 @@ public class BookTransactionResponseModel extends RepresentationModel<BookTransa
     private String bookid;
     private String authorid;
     private String inventoryid;
-    private String memberid;
 
     private String title;
     private String genre;
     private String publisher;
 
     private LocalDateTime released;
-
-    private BookStatus availability;
 
     private List<TransactionResponseModel> transactions;
 }

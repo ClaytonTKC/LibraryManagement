@@ -1,8 +1,6 @@
 package org.isaacwallace.librarymanagement.Transaction.Mapper;
 
-import org.isaacwallace.librarymanagement.Book.DataAccess.Book;
 import org.isaacwallace.librarymanagement.Book.Presentation.BookController;
-import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
 import org.isaacwallace.librarymanagement.Employee.Presentation.EmployeeController;
 import org.isaacwallace.librarymanagement.Member.Presentation.MemberController;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.Transaction;
@@ -25,6 +23,11 @@ public interface TransactionResponseMapper {
     TransactionResponseModel entityToResponseModel(Transaction transaction);
     List<TransactionResponseModel> entityToResponseModelList(List<Transaction> transactions);
     List<TransactionResponseModel> entitiesToResponseModelList(List<Transaction> transactions);
+
+    @AfterMapping
+    default void mapResponseFields(@MappingTarget TransactionResponseModel transactionResponseModel, Transaction transaction) {
+        transactionResponseModel.setStatus(transaction.getStatus());
+    }
 
     @AfterMapping
     default void addLinks(@MappingTarget TransactionResponseModel transactionResponseModel, Transaction transaction) {

@@ -22,7 +22,6 @@ public class MemberServiceClient {
     private final RestTemplate restTemplate;
     private final ObjectMapper mapper;
 
-
     private final String SERVICE_BASE_URL;
 
     public MemberServiceClient(RestTemplate restTemplate, ObjectMapper mapper, @Value("${member.service.base-url}") String serviceBaseUrl) {

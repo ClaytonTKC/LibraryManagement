@@ -2,6 +2,7 @@ package org.isaacwallace.librarymanagement.Inventory.Mapper;
 
 import org.isaacwallace.librarymanagement.Book.Presentation.BookController;
 import org.isaacwallace.librarymanagement.Inventory.DataAccess.Inventory;
+import org.isaacwallace.librarymanagement.Inventory.DataAccess.InventoryStatus;
 import org.isaacwallace.librarymanagement.Inventory.Presentation.InventoryController;
 import org.isaacwallace.librarymanagement.Inventory.Presentation.Models.InventoryResponseModel;
 import org.isaacwallace.librarymanagement.InventoryBook.Presentation.InventoryBooksController;
@@ -23,6 +24,11 @@ public interface InventoryResponseMapper {
     InventoryResponseModel entityToResponseModel(Inventory inventory);
     List<InventoryResponseModel> entityToResponseModelList(List<Inventory> inventories);
     InventoryBooksResponseModel bookToAggregateResponseModel(Inventory inventory);
+
+    @AfterMapping
+    default void mapResponseFields(@MappingTarget InventoryResponseModel inventoryResponseModel, Inventory inventory) {
+        inventoryResponseModel.setAvailability(inventoryResponseModel.getQuantity() > 0 ? InventoryStatus.AVAILABLE : InventoryStatus.UNAVAILABLE);
+    }
 
     @AfterMapping
     default void addLinks(@MappingTarget InventoryResponseModel inventoryResponseModel, Inventory inventory) {

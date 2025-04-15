@@ -11,5 +11,5 @@ public class InventoryResponseModel extends RepresentationModel<InventoryRespons
     private String bookid;
     private Integer quantity;
 
-    private InventoryStatus status;
+    private InventoryStatus availability;
 }

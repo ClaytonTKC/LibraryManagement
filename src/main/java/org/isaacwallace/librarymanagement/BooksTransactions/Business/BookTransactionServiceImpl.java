@@ -35,7 +35,9 @@ public class BookTransactionServiceImpl implements BookTransactionService {
 
         List<TransactionResponseModel> transactions = this.transactionResponseMapper.entitiesToResponseModelList(this.transactionRepository.findTransactionsByBookid(bookid));
         BookTransactionResponseModel bookModel = this.bookResponseMapper.transactionToAggregateResponseModel(book);
+
         bookModel.setTransactions(transactions);
+
         bookModel.setBookid(bookid);
 
         return bookModel;
