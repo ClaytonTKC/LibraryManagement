@@ -3,6 +3,7 @@ package org.isaacwallace.librarymanagement.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.HttpErrorInfo;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InUseException;
+import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,6 +25,12 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public HttpErrorInfo handleNotFoundException(WebRequest req, Exception ex){
         return createHttpErrorInfo(HttpStatus.NOT_FOUND, req, ex);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidInputException.class)
+    public HttpErrorInfo handleInvalidInputException(WebRequest request, Exception ex){
+        return createHttpErrorInfo(HttpStatus.BAD_REQUEST, request, ex);
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
