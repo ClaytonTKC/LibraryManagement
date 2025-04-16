@@ -19,14 +19,14 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 @Service
-public class EmployeeImpl implements EmployeeService {
+public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final EmployeeResponseMapper employeeResponseMapper;
     private final EmployeeRequestMapper employeeRequestMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
-    public EmployeeImpl(EmployeeRepository employeeRepository, EmployeeResponseMapper employeeResponseMapper, EmployeeRequestMapper employeeRequestMapper) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeResponseMapper employeeResponseMapper, EmployeeRequestMapper employeeRequestMapper) {
         this.employeeRepository = employeeRepository;
         this.employeeResponseMapper = employeeResponseMapper;
         this.employeeRequestMapper = employeeRequestMapper;
@@ -49,7 +49,7 @@ public class EmployeeImpl implements EmployeeService {
     public EmployeeResponseModel addEmployee(EmployeeRequestModel employeeRequestModel) {
         Employee newEmployee = this.employeeRequestMapper.requestModelToEntity(employeeRequestModel, new EmployeeIdentifier());
 
-        return employeeResponseMapper.entityToResponseModel(newEmployee);
+        return employeeResponseMapper.entityToResponseModel(this.employeeRepository.save(newEmployee));
     }
 
     public EmployeeResponseModel updateEmployee(String employeeid, EmployeeRequestModel employeeRequestModel) {
