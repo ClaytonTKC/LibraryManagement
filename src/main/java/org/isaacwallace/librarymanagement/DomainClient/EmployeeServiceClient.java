@@ -25,7 +25,7 @@ public class EmployeeServiceClient {
 
     private final String SERVICE_BASE_URL;
 
-    public EmployeeServiceClient(RestTemplate restTemplate, ObjectMapper mapper, @Value("{employee.service.base-url}") String SERVICE_BASE_URL) {
+    public EmployeeServiceClient(RestTemplate restTemplate, ObjectMapper mapper, @Value("${employee.service.base-url}") String SERVICE_BASE_URL) {
         this.restTemplate = restTemplate;
         this.mapper = mapper;
 
