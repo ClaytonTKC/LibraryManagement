@@ -2,6 +2,7 @@ package org.isaacwallace.librarymanagement.DomainClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.isaacwallace.librarymanagement.Transaction.Presentation.Models.TransactionRequestModel;
 import org.isaacwallace.librarymanagement.Transaction.Presentation.Models.TransactionResponseModel;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.HttpErrorInfo;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
@@ -51,21 +52,21 @@ public class TransactionServiceClient {
         }
     }
 
-    public TransactionResponseModel addTransaction(TransactionResponseModel transactionResponseModel) {
+    public TransactionResponseModel addTransaction(TransactionRequestModel transactionRequestModel) {
         try {
             log.debug("transaction-service URL is {}", SERVICE_BASE_URL);
 
-            return this.restTemplate.postForObject(SERVICE_BASE_URL, transactionResponseModel, TransactionResponseModel.class);
+            return this.restTemplate.postForObject(SERVICE_BASE_URL, transactionRequestModel, TransactionResponseModel.class);
         } catch (HttpClientErrorException ex) {
             throw handleHttpClientException(ex);
         }
     }
 
-    public TransactionResponseModel updateTransaction(TransactionResponseModel transactionResponseModel, String transactionid) {
+    public TransactionResponseModel updateTransaction(TransactionRequestModel transactionRequestModel, String transactionid) {
         try {
             log.debug("transaction-service URL is {}", SERVICE_BASE_URL + "/" + transactionid);
 
-            this.restTemplate.put(SERVICE_BASE_URL + "/" + transactionid, transactionResponseModel);
+            this.restTemplate.put(SERVICE_BASE_URL + "/" + transactionid, transactionRequestModel);
 
             return this.getTransactionByTransactionId(transactionid);
         } catch (HttpClientErrorException ex) {

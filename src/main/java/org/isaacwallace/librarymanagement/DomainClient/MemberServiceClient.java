@@ -3,6 +3,7 @@ package org.isaacwallace.librarymanagement.DomainClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.isaacwallace.librarymanagement.Employee.Presentation.Models.EmployeeResponseModel;
+import org.isaacwallace.librarymanagement.Member.Presentation.Models.MemberRequestModel;
 import org.isaacwallace.librarymanagement.Member.Presentation.Models.MemberResponseModel;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.HttpErrorInfo;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
@@ -51,21 +52,21 @@ public class MemberServiceClient {
         }
     }
 
-    public MemberResponseModel addMember(MemberResponseModel memberResponseModel) {
+    public MemberResponseModel addMember(MemberRequestModel memberRequestModel) {
         try {
             log.debug("member-service URL is {}", SERVICE_BASE_URL);
 
-            return this.restTemplate.postForObject(SERVICE_BASE_URL, memberResponseModel, MemberResponseModel.class);
+            return this.restTemplate.postForObject(SERVICE_BASE_URL, memberRequestModel, MemberResponseModel.class);
         } catch (HttpClientErrorException ex) {
             throw handleHttpClientException(ex);
         }
     }
 
-    public MemberResponseModel updateMember(MemberResponseModel memberResponseModel, String memberid) {
+    public MemberResponseModel updateMember(MemberRequestModel memberRequestModel, String memberid) {
         try {
             log.debug("member-service URL is {}", SERVICE_BASE_URL + "/" + memberid);
 
-            this.restTemplate.put(SERVICE_BASE_URL + "/" + memberid, memberResponseModel, MemberResponseModel.class);
+            this.restTemplate.put(SERVICE_BASE_URL + "/" + memberid, memberRequestModel);
 
             return this.getMemberByMemberId(memberid);
         } catch (HttpClientErrorException ex) {

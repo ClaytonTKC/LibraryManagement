@@ -2,6 +2,7 @@ package org.isaacwallace.librarymanagement.DomainClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookRequestModel;
 import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.HttpErrorInfo;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
@@ -51,21 +52,21 @@ public class BookServiceClient {
         }
     }
 
-    public BookResponseModel addBook(BookResponseModel bookResponseModel) {
+    public BookResponseModel addBook(BookRequestModel bookRequestModel) {
         try {
             log.debug("book-service URL is {}", SERVICE_BASE_URL);
 
-            return this.restTemplate.postForObject(SERVICE_BASE_URL, bookResponseModel, BookResponseModel.class);
+            return this.restTemplate.postForObject(SERVICE_BASE_URL, bookRequestModel, BookResponseModel.class);
         } catch (HttpClientErrorException ex) {
             throw handleHttpClientException(ex);
         }
     }
 
-    public BookResponseModel updateBook(BookResponseModel bookResponseModel, String bookid) {
+    public BookResponseModel updateBook(BookRequestModel bookRequestModel, String bookid) {
         try {
             log.debug("book-service URL is {}", SERVICE_BASE_URL + "/" + bookid);
 
-            this.restTemplate.put(SERVICE_BASE_URL + "/" + bookid, bookResponseModel, BookResponseModel.class);
+            this.restTemplate.put(SERVICE_BASE_URL + "/" + bookid, bookRequestModel);
 
             return this.getBookByBookId(bookid);
         } catch (HttpClientErrorException ex) {
