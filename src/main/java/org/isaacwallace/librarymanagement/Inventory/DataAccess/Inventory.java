@@ -18,7 +18,4 @@ public class Inventory {
 
     private String bookid;
     private Integer quantity;
-
-    @Enumerated(EnumType.STRING)
-    private InventoryStatus status;
 }

@@ -11,6 +11,4 @@ import org.springframework.hateoas.RepresentationModel;
 public class InventoryRequestModel extends RepresentationModel<InventoryRequestModel> {
     String bookid;
     Integer quantity;
-
-    InventoryStatus status;
 }

@@ -2,7 +2,9 @@ package org.isaacwallace.librarymanagement.Book.DataAccess;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -21,7 +23,6 @@ public class Book {
 
     private String authorid;
     private String inventoryid;
-    private String memberid;
 
     private String title;
     private String genre;

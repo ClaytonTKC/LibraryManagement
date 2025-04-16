@@ -53,10 +53,14 @@ public class TransactionServiceImpl implements TransactionService {
         if (transaction.getMemberid() == null) {
             throw new InvalidInputException("Transaction must be associated with a member.");
         }
+
+        if (transaction.getEmployeeid() == null) {
+            throw new InvalidInputException("Transaction must be associated with an employee.");
+        }
     }
 
     public List<TransactionResponseModel> getAllTransactions() {
-        return this.transactionResponseMapper.entityToResponseModelList(transactionRepository.findAll());
+        return this.transactionResponseMapper.entitiesToResponseModelList(transactionRepository.findAll(), bookServiceClient, memberServiceClient, employeeServiceClient);
     }
 
     public TransactionResponseModel getTransactionById(String transactionid) {
@@ -66,7 +70,7 @@ public class TransactionServiceImpl implements TransactionService {
             throw new NotFoundException("Unknown transaction id " + transactionid);
         }
 
-        return this.transactionResponseMapper.entityToResponseModel(transaction);
+        return this.transactionResponseMapper.entityToResponseModel(transaction, bookServiceClient, memberServiceClient, employeeServiceClient);
     }
 
     public TransactionResponseModel addTransaction(TransactionRequestModel transactionRequestModel) {
@@ -92,7 +96,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         this.validateBookInvariant(transaction);
 
-        return this.transactionResponseMapper.entityToResponseModel(this.transactionRepository.save(transaction));
+        return this.transactionResponseMapper.entityToResponseModel(this.transactionRepository.save(transaction), bookServiceClient, memberServiceClient, employeeServiceClient);
     }
 
     public TransactionResponseModel updateTransaction(String transactionid, TransactionRequestModel transactionRequestModel) {
@@ -128,7 +132,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         logger.info("Updated transaction with id " + transactionid);
 
-        return this.transactionResponseMapper.entityToResponseModel(updatedTransaction);
+        return this.transactionResponseMapper.entityToResponseModel(updatedTransaction, bookServiceClient, memberServiceClient, employeeServiceClient);
     }
 
     public void deleteTransaction(String transactionid) {

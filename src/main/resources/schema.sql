@@ -27,8 +27,7 @@ CREATE TABLE IF NOT EXISTS inventories (
     inventoryid VARCHAR(50) UNIQUE NOT NULL,
     bookid VARCHAR(50) NOT NULL,
 
-    quantity INTEGER,
-    status VARCHAR(50)
+    quantity INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS books (
@@ -36,7 +35,6 @@ CREATE TABLE IF NOT EXISTS books (
     bookid VARCHAR(50) UNIQUE NOT NULL,
     authorid VARCHAR(50) NOT NULL,
     inventoryid VARCHAR(50) NOT NULL,
-    memberid VARCHAR(50),
     title VARCHAR(255) NOT NULL,
     genre VARCHAR(100),
     publisher VARCHAR(100),

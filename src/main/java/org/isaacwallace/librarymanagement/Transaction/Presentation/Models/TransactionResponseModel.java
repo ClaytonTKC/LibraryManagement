@@ -1,8 +1,9 @@
 package org.isaacwallace.librarymanagement.Transaction.Presentation.Models;
 
 import lombok.Data;
-import org.isaacwallace.librarymanagement.Book.DataAccess.BookIdentifier;
-import org.isaacwallace.librarymanagement.Member.DataAccess.MemberIdentifier;
+import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
+import org.isaacwallace.librarymanagement.Employee.Presentation.Models.EmployeeResponseModel;
+import org.isaacwallace.librarymanagement.Member.Presentation.Models.MemberResponseModel;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.Payment;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.TransactionStatus;
 import org.springframework.hateoas.RepresentationModel;
@@ -22,4 +23,8 @@ public class TransactionResponseModel extends RepresentationModel<TransactionRes
     private TransactionStatus status;
 
     private Payment payment;
+
+    private BookResponseModel book;
+    private MemberResponseModel member;
+    private EmployeeResponseModel employee;
 }

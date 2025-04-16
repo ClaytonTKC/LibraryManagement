@@ -71,11 +71,12 @@ rectangle "Library Management" as BoundedContextSocialMedia #line.dashed {
     }
 
     package "Transaction Sub-Domain" #Wheat {
-        ENTITY(Transaction) #lightblue {
+        AGGREGATE_ROOT(Transaction) #lightblue {
             transactionId: UUID
-            transactionDate: DateTime
             memberId: UUID
             bookId: UUID
+            employeeId: UUID
+            transactionDate: DateTime
             status: TransactionStatus
         }
 
@@ -141,29 +142,20 @@ rectangle "Library Management" as BoundedContextSocialMedia #line.dashed {
             UNAVAILABLE
         }
 
-        ENTITY(Book) #lightblue {
+        AGGREGATE(Book) #lightblue {
             bookId: UUID
             authoId: UUID
             title: String
             genre: String
             publisher: String
             released: DateTime
-            availability: BookStatus
-            renter: UUID
         }
 
         VALUE_OBJECT(BookIdentifier) #Bisque {
             isbn: UUID
         }
 
-        ENUM(BookStatus) #SandyBrown {
-            AVAILABLE,
-            BORROWED,
-            DAMAGED
-        }
-
         Book "1" o--> "1" BookIdentifier
-        Book --> BookStatus
         Book "1" o--> "1" MemberIdentifier
 
         Inventory "1" o--> "1" InventoryIdentifier
@@ -200,9 +192,9 @@ rectangle "Library Management" as BoundedContextSocialMedia #line.dashed {
     }
 
     Book "1" o--> "1" AuthorIdentifier
-    Book "1" o--> "*" TransactionIdentifier
-    Book "1" o--> "1" MemberIdentifier
+    Book "1" o--> "*" InventoryIdentifier
 
+    Transaction "1" o--> "1" EmployeeIdentifier
     Transaction "1" o--> "1" BookIdentifier
     Transaction "1" o--> "1" MemberIdentifier
 }

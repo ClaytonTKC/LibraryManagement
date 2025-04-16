@@ -3,6 +3,9 @@ package org.isaacwallace.librarymanagement.Transaction.Mapper;
 import org.isaacwallace.librarymanagement.Book.DataAccess.Book;
 import org.isaacwallace.librarymanagement.Book.Presentation.BookController;
 import org.isaacwallace.librarymanagement.Book.Presentation.Models.BookResponseModel;
+import org.isaacwallace.librarymanagement.DomainClient.BookServiceClient;
+import org.isaacwallace.librarymanagement.DomainClient.EmployeeServiceClient;
+import org.isaacwallace.librarymanagement.DomainClient.MemberServiceClient;
 import org.isaacwallace.librarymanagement.Employee.Presentation.EmployeeController;
 import org.isaacwallace.librarymanagement.Member.Presentation.MemberController;
 import org.isaacwallace.librarymanagement.Transaction.DataAccess.Transaction;
@@ -14,6 +17,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.hateoas.Link;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -22,9 +26,27 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Mapper(componentModel = "spring")
 public interface TransactionResponseMapper {
     @Mapping(expression = "java(transaction.getTransactionIdentifier().getTransactionid())", target = "transactionid")
-    TransactionResponseModel entityToResponseModel(Transaction transaction);
-    List<TransactionResponseModel> entityToResponseModelList(List<Transaction> transactions);
-    List<TransactionResponseModel> entitiesToResponseModelList(List<Transaction> transactions);
+    @Mapping(expression = "java(bookService.getBookByBookId(transaction.getBookid()))", target = "book")
+    @Mapping(expression = "java(memberService.getMemberByMemberId(transaction.getMemberid()))", target = "member")
+    @Mapping(expression = "java(employeeService.getEmployeeByEmployeeid(transaction.getEmployeeid()))", target = "employee")
+    TransactionResponseModel entityToResponseModel(Transaction transaction, BookServiceClient bookService, MemberServiceClient memberService, EmployeeServiceClient employeeService);
+
+    default List<TransactionResponseModel> entityToResponseModelList(Transaction transaction, BookServiceClient bookService, MemberServiceClient memberService, EmployeeServiceClient employeeService) {
+        List<TransactionResponseModel> t = new ArrayList<>();
+        t.add(entityToResponseModel(transaction, bookService, memberService, employeeService));
+        return t;
+    }
+
+    default List<TransactionResponseModel> entitiesToResponseModelList(List<Transaction> transactions, BookServiceClient bookService, MemberServiceClient memberService, EmployeeServiceClient employeeService) {
+        return transactions.stream()
+                .map(transaction -> entityToResponseModel(transaction, bookService, memberService, employeeService))
+                .toList();
+    }
+
+    @AfterMapping
+    default void mapResponseFields(@MappingTarget TransactionResponseModel transactionResponseModel, Transaction transaction) {
+        transactionResponseModel.setStatus(transaction.getStatus());
+    }
 
     @AfterMapping
     default void addLinks(@MappingTarget TransactionResponseModel transactionResponseModel, Transaction transaction) {

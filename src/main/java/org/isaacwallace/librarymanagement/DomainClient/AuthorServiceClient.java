@@ -2,6 +2,7 @@ package org.isaacwallace.librarymanagement.DomainClient;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.isaacwallace.librarymanagement.Author.Presentation.Models.AuthorRequestModel;
 import org.isaacwallace.librarymanagement.Author.Presentation.Models.AuthorResponseModel;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.HttpErrorInfo;
 import org.isaacwallace.librarymanagement.Utils.Exceptions.InvalidInputException;
@@ -51,11 +52,11 @@ public class AuthorServiceClient {
         }
     }
 
-    public AuthorResponseModel addAuthor(AuthorResponseModel authorResponseModel) {
+    public AuthorResponseModel addAuthor(AuthorRequestModel authorRequestModel) {
         try {
             log.debug("author-service URL is {}", SERVICE_BASE_URL);
 
-            return this.restTemplate.postForObject(SERVICE_BASE_URL, authorResponseModel, AuthorResponseModel.class);
+            return this.restTemplate.postForObject(SERVICE_BASE_URL, authorRequestModel, AuthorResponseModel.class);
         } catch (HttpClientErrorException ex) {
             throw handleHttpClientException(ex);
         }
@@ -65,7 +66,7 @@ public class AuthorServiceClient {
         try {
             log.debug("author-service URL is {}", SERVICE_BASE_URL);
 
-            this.restTemplate.put(SERVICE_BASE_URL, authorResponseModel, AuthorResponseModel.class);
+            this.restTemplate.put(SERVICE_BASE_URL, authorResponseModel);
 
             return this.getAuthorByAuthorId(authorid);
         } catch (HttpClientErrorException ex) {
